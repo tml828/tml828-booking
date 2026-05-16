@@ -969,17 +969,18 @@ window.dlICS=(id)=>{
   const b=S.data.bookings.find(b=>b.id===id);
   if(!b)return;
   const sl=b.ses?.id==='other'?b.custom:b.ses?.label;
-  const [y,mo,d]=b.date.split('-').map(Number);
   const timeStr=b.time||'9:00 AM';
   function to24(t){const[time,ampm]=t.split(' ');let[h,m]=time.split(':').map(Number);if(ampm==='PM'&&h!==12)h+=12;if(ampm==='AM'&&h===12)h=0;return`${String(h).padStart(2,'0')}${String(m).padStart(2,'0')}00`;}
   const dtStart=`${b.date.replace(/-/g,'')}T${to24(timeStr)}`;
   const endTime=b.endTime?to24(b.endTime):null;
   let dtEnd=dtStart;
   if(endTime){dtEnd=`${b.date.replace(/-/g,'')}T${endTime}`;}
-  else{// default +1hr
-    const h=parseInt(dtStart.slice(9,11));const m2=dtStart.slice(11,13);
+  else{const h=parseInt(dtStart.slice(9,11));const m2=dtStart.slice(11,13);
     dtEnd=`${b.date.replace(/-/g,'')}T${String(h+1).padStart(2,'0')}${m2}00`;}
-  const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TML828//Booking//EN\r\nBEGIN:VEVENT\r\nUID:${id}@tml828\r\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g,'').split('.')[0]}Z\r\nDTSTART:${dtStart}\r\nDTEND:${dtEnd}\r\nSUMMARY:${sl} — ${b.form.firstName} ${b.form.lastName}\r\nDESCRIPTION:Session: ${sl}${b.pkg?' ('+b.pkg.name+')':''}\\nClient: ${b.form.firstName} ${b.form.lastName}\\nEmail: ${b.form.email}\\nPhone: ${b.form.phone}\\nStatus: ${b.status}\r\nLOCATION:Cleveland, Ohio\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+  // Build description with all details including notes
+  const notes=b.form.notes?`\\nNotes: ${b.form.notes.replace(/\n/g,'\\n')}` :'';
+  const desc=`Session: ${sl}${b.pkg?' ('+b.pkg.name+')':''}\\nClient: ${b.form.firstName} ${b.form.lastName}\\nEmail: ${b.form.email}\\nPhone: ${b.form.phone}\\nInstagram: ${b.form.instagram||'—'}${notes}`;
+  const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TML828//Booking//EN\r\nBEGIN:VEVENT\r\nUID:${id}@tml828\r\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g,'').split('.')[0]}Z\r\nDTSTART:${dtStart}\r\nDTEND:${dtEnd}\r\nSUMMARY:${sl} — ${b.form.firstName} ${b.form.lastName}\r\nDESCRIPTION:${desc}\r\nLOCATION:Cleveland, Ohio\r\nEND:VEVENT\r\nEND:VCALENDAR`;
   const blob=new Blob([ics],{type:'text/calendar'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');a.href=url;a.download=`TML828_${b.form.lastName}_${b.date}.ics`;a.click();
