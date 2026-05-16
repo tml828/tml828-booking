@@ -1,5 +1,5 @@
 // Through My Lens 828 — Shared Database
-// Uses @netlify/blobs (built into Netlify, no package.json needed on newer runtimes)
+// Uses @netlify/blobs with context-provided credentials
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -8,29 +8,36 @@ const CORS = {
   'Content-Type': 'application/json',
 };
 
+const empty = () => ({ bookings: [], blockedDates: {}, blockedTimes: {} });
+
 exports.handler = async (event, context) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers: CORS, body: '' };
   }
 
+  // Get site ID and token from Netlify context
+  const siteID = process.env.SITE_ID || process.env.NETLIFY_SITE_ID || context.clientContext?.custom?.netlify;
+  const token = process.env.NETLIFY_API_TOKEN || process.env.NETLIFY_AUTH_TOKEN;
+
   let store;
   try {
     const { getStore } = require('@netlify/blobs');
-    store = getStore({ name: 'tml828', consistency: 'strong' });
+    const storeOpts = { name: 'tml828', consistency: 'strong' };
+    if (siteID) storeOpts.siteID = siteID;
+    if (token) storeOpts.token = token;
+    store = getStore(storeOpts);
   } catch(e) {
-    return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: 'Blobs not available: ' + e.message }) };
+    return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: 'Init failed: ' + e.message }) };
   }
-
-  const empty = { bookings: [], blockedDates: {}, blockedTimes: {} };
 
   // ── GET ──
   if (event.httpMethod === 'GET') {
     try {
       const raw = await store.get('data').catch(() => null);
-      const data = raw ? JSON.parse(raw) : empty;
+      const data = raw ? JSON.parse(raw) : empty();
       return { statusCode: 200, headers: CORS, body: JSON.stringify(data) };
     } catch (e) {
-      return { statusCode: 200, headers: CORS, body: JSON.stringify(empty) };
+      return { statusCode: 200, headers: CORS, body: JSON.stringify(empty()) };
     }
   }
 
@@ -39,7 +46,7 @@ exports.handler = async (event, context) => {
     try {
       const { action, payload } = JSON.parse(event.body);
       const raw = await store.get('data').catch(() => null);
-      const data = raw ? JSON.parse(raw) : { ...empty };
+      const data = raw ? JSON.parse(raw) : empty();
 
       if (action === 'save_all') {
         if (payload.bookings !== undefined) data.bookings = payload.bookings;
