@@ -1,8 +1,5 @@
-// Through My Lens 828 — Shared Database Function
-// Uses Netlify Blobs for cross-device data storage
-// All bookings, blocked dates, and blocked times stored in the cloud
-
-const { getStore } = require('@netlify/blobs');
+// Through My Lens 828 — Shared Database
+// Uses @netlify/blobs (built into Netlify, no package.json needed on newer runtimes)
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
@@ -11,63 +8,52 @@ const CORS = {
   'Content-Type': 'application/json',
 };
 
-exports.handler = async (event) => {
+exports.handler = async (event, context) => {
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 200, headers: CORS, body: '' };
   }
 
-  const store = getStore('tml828');
+  let store;
+  try {
+    const { getStore } = require('@netlify/blobs');
+    store = getStore({ name: 'tml828', consistency: 'strong' });
+  } catch(e) {
+    return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: 'Blobs not available: ' + e.message }) };
+  }
 
-  // ── GET — load all data ──
+  const empty = { bookings: [], blockedDates: {}, blockedTimes: {} };
+
+  // ── GET ──
   if (event.httpMethod === 'GET') {
     try {
-      const bookings = await store.get('bookings', { type: 'json' }).catch(() => []);
-      const blockedDates = await store.get('blockedDates', { type: 'json' }).catch(() => ({}));
-      const blockedTimes = await store.get('blockedTimes', { type: 'json' }).catch(() => ({}));
-      return {
-        statusCode: 200,
-        headers: CORS,
-        body: JSON.stringify({ bookings: bookings||[], blockedDates: blockedDates||{}, blockedTimes: blockedTimes||{} }),
-      };
+      const raw = await store.get('data').catch(() => null);
+      const data = raw ? JSON.parse(raw) : empty;
+      return { statusCode: 200, headers: CORS, body: JSON.stringify(data) };
     } catch (e) {
-      return { statusCode: 500, headers: CORS, body: JSON.stringify({ error: e.message }) };
+      return { statusCode: 200, headers: CORS, body: JSON.stringify(empty) };
     }
   }
 
-  // ── POST — save data ──
+  // ── POST ──
   if (event.httpMethod === 'POST') {
     try {
       const { action, payload } = JSON.parse(event.body);
-
-      if (action === 'save_booking') {
-        const bookings = await store.get('bookings', { type: 'json' }).catch(() => []);
-        const list = bookings || [];
-        const idx = list.findIndex(b => b.id === payload.id);
-        if (idx >= 0) list[idx] = payload;
-        else list.push(payload);
-        await store.setJSON('bookings', list);
-        return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
-      }
-
-      if (action === 'update_booking') {
-        const bookings = await store.get('bookings', { type: 'json' }).catch(() => []);
-        const list = bookings || [];
-        const idx = list.findIndex(b => b.id === payload.id);
-        if (idx >= 0) list[idx] = { ...list[idx], ...payload };
-        await store.setJSON('bookings', list);
-        return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
-      }
-
-      if (action === 'save_blocked') {
-        await store.setJSON('blockedDates', payload.blockedDates);
-        await store.setJSON('blockedTimes', payload.blockedTimes);
-        return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
-      }
+      const raw = await store.get('data').catch(() => null);
+      const data = raw ? JSON.parse(raw) : { ...empty };
 
       if (action === 'save_all') {
-        if (payload.bookings) await store.setJSON('bookings', payload.bookings);
-        if (payload.blockedDates) await store.setJSON('blockedDates', payload.blockedDates);
-        if (payload.blockedTimes) await store.setJSON('blockedTimes', payload.blockedTimes);
+        if (payload.bookings !== undefined) data.bookings = payload.bookings;
+        if (payload.blockedDates !== undefined) data.blockedDates = payload.blockedDates;
+        if (payload.blockedTimes !== undefined) data.blockedTimes = payload.blockedTimes;
+        await store.set('data', JSON.stringify(data));
+        return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
+      }
+
+      if (action === 'save_booking') {
+        const idx = data.bookings.findIndex(b => b.id === payload.id);
+        if (idx >= 0) data.bookings[idx] = payload;
+        else data.bookings.push(payload);
+        await store.set('data', JSON.stringify(data));
         return { statusCode: 200, headers: CORS, body: JSON.stringify({ ok: true }) };
       }
 
