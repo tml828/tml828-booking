@@ -1,0 +1,7 @@
+{
+  "name": "tml828-booking",
+  "version": "1.0.0",
+  "dependencies": {
+    "@netlify/blobs": "^7.0.0"
+  }
+}
