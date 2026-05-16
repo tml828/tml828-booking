@@ -199,6 +199,47 @@ function loadData(){
 }
 function save(data){try{localStorage.setItem(SK,JSON.stringify(data));}catch(e){}}
 
+// ── CLOUD DATABASE SYNC ──
+function dbUrl(){
+  const base=(window.location.origin||'').replace(/\/+$/,'');
+  return base+'/.netlify/functions/db';
+}
+async function cloudLoad(){
+  try{
+    const r=await fetch(dbUrl(),{method:'GET'});
+    if(!r.ok)return null;
+    const d=await r.json();
+    return d;
+  }catch(e){return null;}
+}
+async function cloudSave(action,payload){
+  try{
+    await fetch(dbUrl(),{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({action,payload})
+    });
+  }catch(e){console.log('Cloud save error:',e);}
+}
+// Save everything to cloud
+async function syncToCloud(){
+  await cloudSave('save_all',{
+    bookings:S.data.bookings,
+    blockedDates:S.data.blockedDates,
+    blockedTimes:S.data.blockedTimes,
+  });
+}
+// Load everything from cloud and merge
+async function syncFromCloud(){
+  const d=await cloudLoad();
+  if(d){
+    S.data.bookings=d.bookings||[];
+    S.data.blockedDates=d.blockedDates||{};
+    S.data.blockedTimes=d.blockedTimes||{};
+    save(S.data);
+  }
+}
+
 let S={
   view:'book',loggedIn:false,
   data:loadData(),
@@ -468,6 +509,8 @@ function sCustEdit(id){
 function renderAdmin(){
   // Always reload fresh data when entering admin view
   S.data=loadData();
+  // Background cloud sync — next ↻ Refresh will show latest
+  syncFromCloud().then(()=>{save(S.data);});
 
   if(!S.loggedIn){return`${hdr(null,null,false)}<div class="pg" style="max-width:340px;margin:0 auto;text-align:center;padding-top:50px;">
     <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Secure Access</div>
@@ -807,12 +850,10 @@ window.toggleCus=(c)=>{S.bk.useCus=c;if(c){S.bk.time=null;S.bk.endTime=null;}els
 
 window.aPickDay=(key)=>{
   if(S.aDate===key){
-    // Second tap on same day = block/unblock
     if(S.data.blockedDates[key])delete S.data.blockedDates[key];
     else S.data.blockedDates[key]=true;
-    save(S.data);render();
+    save(S.data);syncToCloud();render();
   } else {
-    // First tap = select date to show time slots
     S.aDate=key;render();
   }
 };
@@ -821,7 +862,7 @@ window.togTime=(dk2,t)=>{
   if(!S.data.blockedTimes[dk2])S.data.blockedTimes[dk2]=[];
   const idx=S.data.blockedTimes[dk2].indexOf(t);
   if(idx>=0)S.data.blockedTimes[dk2].splice(idx,1);else S.data.blockedTimes[dk2].push(t);
-  save(S.data);render();
+  save(S.data);syncToCloud();render();
 };
 
 window.blkTimeRange=(dk2,doBlk)=>{
@@ -831,7 +872,7 @@ window.blkTimeRange=(dk2,doBlk)=>{
   if(fi<0||ti<0||fi>ti){alert('Start time must be before end time.');return;}
   if(!S.data.blockedTimes[dk2])S.data.blockedTimes[dk2]=[];
   for(let i=fi;i<=ti;i++){const t=TIMES[i],idx=S.data.blockedTimes[dk2].indexOf(t);if(doBlk&&idx<0)S.data.blockedTimes[dk2].push(t);else if(!doBlk&&idx>=0)S.data.blockedTimes[dk2].splice(idx,1);}
-  save(S.data);render();
+  save(S.data);syncToCloud();render();
 };
 
 window.blkDayRange=(doBlk)=>{
@@ -841,34 +882,31 @@ window.blkDayRange=(doBlk)=>{
   if(fd2>td){alert('Start date must be before end date.');return;}
   const t0=tod();let cur=new Date(fd2);
   while(cur<=td){if(cur>t0){const k=`${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}-${String(cur.getDate()).padStart(2,'0')}`;if(doBlk)S.data.blockedDates[k]=true;else delete S.data.blockedDates[k];}cur.setDate(cur.getDate()+1);}
-  save(S.data);render();
+  save(S.data);syncToCloud();render();
 };
 
 window.confirmB=(id)=>{
   const b=S.data.bookings.find(b=>b.id===id);
   if(!b)return;
   b.status='confirmed';
-  // Auto-block the confirmed time slot on that date so future customers can't book it
   if(b.date&&b.time){
     if(!S.data.blockedTimes[b.date])S.data.blockedTimes[b.date]=[];
     if(!S.data.blockedTimes[b.date].includes(b.time)){
       S.data.blockedTimes[b.date].push(b.time);
     }
   }
-  save(S.data);
-  // Send customer confirmation notification
+  save(S.data);syncToCloud();
   sendCustomerNotification(b,'confirmed');
   render();
 };
 window.cancelB=(id)=>{
   const b=S.data.bookings.find(b=>b.id===id);
   if(!b)return;
-  // If confirmed, unblock the time slot
   if(b.status==='confirmed'&&b.date&&b.time&&S.data.blockedTimes[b.date]){
     S.data.blockedTimes[b.date]=S.data.blockedTimes[b.date].filter(t=>t!==b.time);
   }
   b.status='cancelled';
-  save(S.data);render();
+  save(S.data);syncToCloud();render();
 };
 window.restoreB=(id)=>{
   const b=S.data.bookings.find(b=>b.id===id);
@@ -904,12 +942,12 @@ window.saveEdit=(id)=>{
   if(newDate)b.date=newDate;
   if(newTime)b.time=newTime;
   if(newStatus)b.status=newStatus;
-  save(S.data);S.editId=null;S.editForm=null;render();
+  save(S.data);syncToCloud();S.editId=null;S.editForm=null;render();
 };
 
 window.togSettings=()=>{S.settingsOpen=!S.settingsOpen;render();};
 window.togSection=(sec)=>{S.openSection=S.openSection===sec?null:sec;render();};
-window.refreshAdmin=()=>{S.data=loadData();render();};
+window.refreshAdmin=async()=>{await syncFromCloud();S.data=loadData();render();};
 
 window.changePin=()=>{
   const np=document.getElementById('newPin')?.value;
@@ -1029,6 +1067,7 @@ window.submitBk=()=>{
     form:{...S.bk.form},status:'pending',createdAt:new Date().toISOString()
   };
   S.data.bookings.push(booking);save(S.data);
+  syncToCloud(); // sync to cloud so admin sees it on any device
   sendEmailNotification(booking);      // notify Noha
   sendCustomerNotification(booking,'pending'); // notify customer
   S.bk.step=stepLabels(S.bk.ses).length;render();
