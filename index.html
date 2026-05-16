@@ -781,7 +781,7 @@ function renderEditModal(id){
         <div><label>Email</label><input type="email" id="ef_email" value="${f.email||''}" oninput="S.editForm=S.editForm||{};S.editForm.email=this.value;"></div>
         <div><label>Phone</label><input type="tel" id="ef_phone" value="${f.phone||''}" oninput="S.editForm=S.editForm||{};S.editForm.phone=this.value;"></div>
         <div><label>Customer notes</label><textarea rows="2" id="ef_notes" style="resize:vertical;">${f.notes||''}</textarea></div>
-        <div><label>Photographer notes <span style="text-transform:none;letter-spacing:0;color:#4a3a18;">(added to calendar)</span></label><textarea rows="3" id="ef_pnotes" placeholder="Location, outfit details, special instructions…" style="resize:vertical;">${f.pnotes||''}</textarea></div>
+        <div><label>Photographer notes <span style="text-transform:none;letter-spacing:0;color:#4a3a18;">(added to calendar)</span></label><textarea rows="3" id="ef_pnotes" placeholder="Location, outfit details, special instructions…" style="resize:vertical;width:100%;background:#131008;border:1px solid var(--border);color:var(--text);padding:12px 14px;font-family:'Jost',sans-serif;font-size:15px;">${f.pnotes||''}</textarea></div>
         <div><label>Date</label><input type="date" id="ef_date" value="${b.date||''}" oninput="S.editDate=this.value;"></div>
         <div><label>Time</label><select id="ef_time" onchange="S.editTime=this.value;">
           ${TIMES.map(t=>`<option value="${t}" ${b.time===t?'selected':''}>${t}</option>`).join('')}
