@@ -287,6 +287,15 @@ function stepBar(step,ses){
 
 function render(){
   document.getElementById('root').innerHTML=S.view==='book'?renderBook():renderAdmin();
+  // Auto-refresh admin every 30 seconds
+  if(S._autoRefresh)clearInterval(S._autoRefresh);
+  if(S.view==='admin'&&S.loggedIn){
+    S._autoRefresh=setInterval(async()=>{
+      await syncFromCloud();
+      S.data=loadData();
+      document.getElementById('root').innerHTML=renderAdmin();
+    },5000);
+  }
 }
 
 /* ── BOOK ── */
@@ -771,7 +780,8 @@ function renderEditModal(id){
         </div>
         <div><label>Email</label><input type="email" id="ef_email" value="${f.email||''}" oninput="S.editForm=S.editForm||{};S.editForm.email=this.value;"></div>
         <div><label>Phone</label><input type="tel" id="ef_phone" value="${f.phone||''}" oninput="S.editForm=S.editForm||{};S.editForm.phone=this.value;"></div>
-        <div><label>Notes</label><textarea rows="3" id="ef_notes" oninput="S.editForm=S.editForm||{};S.editForm.notes=this.value;" style="resize:vertical;">${f.notes||''}</textarea></div>
+        <div><label>Customer notes</label><textarea rows="2" id="ef_notes" style="resize:vertical;">${f.notes||''}</textarea></div>
+        <div><label>Photographer notes <span style="text-transform:none;letter-spacing:0;color:#4a3a18;">(added to calendar)</span></label><textarea rows="3" id="ef_pnotes" placeholder="Location, outfit details, special instructions…" style="resize:vertical;">${f.pnotes||''}</textarea></div>
         <div><label>Date</label><input type="date" id="ef_date" value="${b.date||''}" oninput="S.editDate=this.value;"></div>
         <div><label>Time</label><select id="ef_time" onchange="S.editTime=this.value;">
           ${TIMES.map(t=>`<option value="${t}" ${b.time===t?'selected':''}>${t}</option>`).join('')}
@@ -828,7 +838,7 @@ window.saveCustEdit=(id)=>{
   alert('Your changes have been saved. Noha will be in touch to confirm.');
   render();
 };
-window.doLogin=()=>{const cur=S.data.adminPin||PIN;if(S.pin===cur){S.loggedIn=true;S.pinErr='';render();}else{S.pinErr='Incorrect PIN. Please try again.';render();}};
+window.doLogin=()=>{const cur=S.data.adminPin||PIN;if(S.pin===cur){S.loggedIn=true;S.pinErr='';syncFromCloud().then(()=>{S.data=loadData();render();});}else{S.pinErr='Incorrect PIN. Please try again.';render();}};
 
 window.updBtn=()=>{const btn=document.getElementById('s1btn');if(btn)btn.disabled=!S.bk.ses||(S.bk.ses.id==='other'&&!S.bk.custom?.trim());};
 window.pickSes=(id)=>{if(id==='other')S.bk.ses={id:'other',label:'Custom Session'};else{S.bk.ses=SESSIONS.find(s=>s.id===id);S.bk.custom='';}S.bk.pkg=null;render();};
@@ -921,15 +931,16 @@ window.closeEdit=()=>{S.editId=null;S.editForm=null;render();};
 window.saveEdit=(id)=>{
   const b=S.data.bookings.find(b=>b.id===id);
   if(!b)return;
-  // Merge form changes
-  if(S.editForm){
-    const fn=document.getElementById('ef_firstName')?.value;
-    const ln=document.getElementById('ef_lastName')?.value;
-    const em=document.getElementById('ef_email')?.value;
-    const ph=document.getElementById('ef_phone')?.value;
-    const no=document.getElementById('ef_notes')?.value;
-    if(fn)b.form.firstName=fn;if(ln)b.form.lastName=ln;if(em)b.form.email=em;if(ph)b.form.phone=ph;b.form.notes=no;
-  }
+  const fn=document.getElementById('ef_firstName')?.value;
+  const ln=document.getElementById('ef_lastName')?.value;
+  const em=document.getElementById('ef_email')?.value;
+  const ph=document.getElementById('ef_phone')?.value;
+  const no=document.getElementById('ef_notes')?.value;
+  const pno=document.getElementById('ef_pnotes')?.value;
+  if(fn)b.form.firstName=fn;if(ln)b.form.lastName=ln;
+  if(em)b.form.email=em;if(ph)b.form.phone=ph;
+  b.form.notes=no;
+  b.form.pnotes=pno; // photographer notes — goes into calendar
   const newDate=document.getElementById('ef_date')?.value;
   const newTime=document.getElementById('ef_time')?.value;
   const newStatus=document.getElementById('ef_status')?.value;
@@ -977,9 +988,9 @@ window.dlICS=(id)=>{
   if(endTime){dtEnd=`${b.date.replace(/-/g,'')}T${endTime}`;}
   else{const h=parseInt(dtStart.slice(9,11));const m2=dtStart.slice(11,13);
     dtEnd=`${b.date.replace(/-/g,'')}T${String(h+1).padStart(2,'0')}${m2}00`;}
-  // Build description with all details including notes
-  const notes=b.form.notes?`\\nNotes: ${b.form.notes.replace(/\n/g,'\\n')}` :'';
-  const desc=`Session: ${sl}${b.pkg?' ('+b.pkg.name+')':''}\\nClient: ${b.form.firstName} ${b.form.lastName}\\nEmail: ${b.form.email}\\nPhone: ${b.form.phone}\\nInstagram: ${b.form.instagram||'—'}${notes}`;
+  const custNotes=b.form.notes?`\\nCustomer notes: ${b.form.notes.replace(/\n/g,' ')}` :'';
+  const pNotes=b.form.pnotes?`\\n\\nPhotographer notes: ${b.form.pnotes.replace(/\n/g,' ')}` :'';
+  const desc=`Session: ${sl}${b.pkg?' ('+b.pkg.name+')':''}\\nClient: ${b.form.firstName} ${b.form.lastName}\\nEmail: ${b.form.email}\\nPhone: ${b.form.phone}${custNotes}${pNotes}`;
   const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TML828//Booking//EN\r\nBEGIN:VEVENT\r\nUID:${id}@tml828\r\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g,'').split('.')[0]}Z\r\nDTSTART:${dtStart}\r\nDTEND:${dtEnd}\r\nSUMMARY:${sl} — ${b.form.firstName} ${b.form.lastName}\r\nDESCRIPTION:${desc}\r\nLOCATION:Cleveland, Ohio\r\nEND:VEVENT\r\nEND:VCALENDAR`;
   const blob=new Blob([ics],{type:'text/calendar'});
   const url=URL.createObjectURL(blob);
