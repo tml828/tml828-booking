@@ -287,10 +287,14 @@ function stepBar(step,ses){
 
 function render(){
   document.getElementById('root').innerHTML=S.view==='book'?renderBook():renderAdmin();
-  // Auto-refresh admin every 30 seconds
+  // Auto-refresh admin every 5 seconds — pause when any input is focused or edit modal is open
   if(S._autoRefresh)clearInterval(S._autoRefresh);
-  if(S.view==='admin'&&S.loggedIn){
+  if(S.view==='admin'&&S.loggedIn&&!S.editId){
     S._autoRefresh=setInterval(async()=>{
+      // Don't refresh if user is typing in any input/textarea/select
+      const active=document.activeElement;
+      const isTyping=active&&(active.tagName==='INPUT'||active.tagName==='TEXTAREA'||active.tagName==='SELECT');
+      if(S.editId||isTyping)return;
       await syncFromCloud();
       S.data=loadData();
       document.getElementById('root').innerHTML=renderAdmin();
