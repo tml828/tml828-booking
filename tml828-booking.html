@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Through My Lens 828</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --black:#060503;--black3:#131008;--black4:#1c180a;
+  --gold:#e2b84a;--gold-dim:#c9952a;--gold-bright:#f5d060;--gold-muted:#6a5520;
+  --text:#fff8e8;--text-muted:#8a7040;
+  --border:#3a2e10;--border-gold:#7a6228;
+}
+html,body{background:#060503 !important;color:var(--text);font-family:'Jost',sans-serif;font-weight:300;font-size:15px;min-height:100%;-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased;}
+body{background:#060503 !important;}
+.app{max-width:900px;margin:0 auto;min-height:100vh;background:#060503;}
+
+/* Prevent iOS zoom on inputs */
+input,select,textarea{font-size:16px !important;}
+
+/* Kill ALL tap highlights */
+*{-webkit-tap-highlight-color:rgba(0,0,0,0) !important;-webkit-tap-highlight-color:transparent !important;}
+
+/* HEADER */
+.hdr{background:#060503;border-bottom:1px solid var(--border);padding:14px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
+.logo-ph{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--gold);letter-spacing:0.05em;line-height:1.1;}
+.logo-ph small{display:block;font-family:'Jost',sans-serif;font-size:8px;font-weight:400;letter-spacing:0.35em;color:var(--gold-dim);text-transform:uppercase;margin-top:3px;}
+.logo-img{height:72px;width:auto;object-fit:contain;max-width:200px;display:block;}
+
+/* BUTTONS */
+.bg{background:var(--gold);color:#060503;border:none;padding:13px 22px;font-family:'Jost',sans-serif;font-size:12px;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;transition:background 0.2s;touch-action:manipulation;}
+.bg:active{background:var(--gold-dim);}
+.bg:disabled{background:var(--black4);color:var(--gold-muted);cursor:not-allowed;}
+.bo{background:transparent;color:var(--gold-dim);border:1px solid var(--border-gold);padding:10px 16px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;touch-action:manipulation;}
+.bo:active{border-color:var(--gold);color:var(--gold);}
+.bo:disabled{opacity:0.3;cursor:not-allowed;}
+.bgh{background:none;border:none;color:var(--gold-dim);font-family:'Jost',sans-serif;font-size:12px;letter-spacing:0.1em;cursor:pointer;padding:6px 0;transition:color 0.2s;touch-action:manipulation;}
+.bgh:active{color:var(--gold);}
+.bd{background:transparent;color:#e24b4a;border:1px solid #5a1a1a;padding:10px 14px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;touch-action:manipulation;}
+.bd:active{background:rgba(163,45,45,0.2);}
+.bedit{background:transparent;color:#c9952a;border:1px solid #6a5220;padding:10px 14px;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;touch-action:manipulation;}
+.bedit:active{background:rgba(201,149,42,0.15);}
+
+/* INPUTS */
+input[type=text],input[type=email],input[type=tel],input[type=password],select,textarea{width:100%;background:var(--black3);border:1px solid var(--border);color:var(--text);padding:12px 14px;font-family:'Jost',sans-serif;font-weight:300;outline:none;transition:border-color 0.2s;-webkit-appearance:none;appearance:none;border-radius:0;}
+input:focus,select:focus,textarea:focus{border-color:var(--gold);}
+input.err{border-color:#a32d2d;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23c9952a' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+select option{background:#131008;color:var(--text);}
+input[type=checkbox]{accent-color:var(--gold);width:18px;height:18px;cursor:pointer;flex-shrink:0;-webkit-appearance:auto;appearance:auto;}
+label{display:block;font-size:11px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:7px;}
+.em{font-size:12px;color:#e24b4a;margin-top:4px;}
+
+.card{background:var(--black3);border:1px solid var(--border);padding:16px;}
+
+/* SESSION TILES */
+.st{cursor:pointer;padding:15px 12px;border:1px solid var(--border);background:var(--black3);text-align:center;font-family:'Jost',sans-serif;font-size:14px;font-weight:400;color:#d4b060;letter-spacing:0.04em;transition:border-color 0.15s,color 0.15s,background 0.15s;touch-action:manipulation;}
+.st:active,.st.sel{border-color:var(--gold);color:var(--gold);background:rgba(226,184,74,0.1);}
+.ct{cursor:pointer;padding:15px 16px;border:1px solid var(--border-gold);background:transparent;text-align:center;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;color:#c9952a;letter-spacing:0.18em;text-transform:uppercase;transition:all 0.15s;width:100%;max-width:340px;touch-action:manipulation;}
+.ct:active,.ct.sel{border-color:var(--gold);color:var(--gold);background:rgba(226,184,74,0.08);}
+
+/* PACKAGE TILES */
+.pt{cursor:pointer;padding:20px 16px;border:1px solid var(--border);background:var(--black3);transition:all 0.15s;position:relative;touch-action:manipulation;}
+.pt:active,.pt.sel{border:2px solid var(--gold);background:rgba(226,184,74,0.07);}
+.pn{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;color:var(--gold);letter-spacing:0.04em;margin-bottom:4px;}
+.pp{font-size:20px;font-weight:600;color:var(--text);margin-bottom:12px;}
+.pd{font-size:13px;color:#a08040;letter-spacing:0.04em;line-height:1.9;}
+.pck{position:absolute;top:12px;right:14px;width:24px;height:24px;border-radius:50%;background:var(--gold);color:#060503;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;}
+
+/* TIME CHIPS */
+.tc{padding:12px 8px;border:1px solid var(--border);background:var(--black3);color:#ddb84a;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;border-radius:2px;text-align:center;touch-action:manipulation;transition:border-color 0.12s,background 0.12s,color 0.12s;}
+.tc:active{border-color:var(--gold-dim);background:rgba(226,184,74,0.1);color:#fff8e8;}
+.tc.sel{border-color:var(--gold);background:rgba(226,184,74,0.14);color:var(--gold);font-weight:600;}
+.tc.blk{border-color:#5a1a1a;background:rgba(163,45,45,0.15);color:#7a2020;cursor:not-allowed;text-decoration:line-through;opacity:0.65;}
+
+/* ADMIN TIME CHIPS */
+.atc{padding:12px 8px;border:1px solid var(--border);background:var(--black3);color:#ddb84a;font-size:13px;cursor:pointer;border-radius:2px;text-align:center;touch-action:manipulation;transition:all 0.12s;}
+.atc:active{border-color:var(--gold-dim);background:rgba(226,184,74,0.1);}
+.atc.blk{border-color:#8a1a1a;background:rgba(163,45,45,0.25);color:#f06060;font-weight:600;}
+
+/* STEP BAR */
+.sb{display:flex;align-items:center;justify-content:center;padding:16px 8px;border-bottom:1px solid var(--border);margin-bottom:20px;overflow-x:auto;}
+.sn{display:flex;flex-direction:column;align-items:center;gap:5px;}
+.sc{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;font-family:'Jost',sans-serif;border:1px solid var(--border);background:var(--black3);color:var(--text-muted);flex-shrink:0;}
+.sc.act{border-color:var(--gold);background:var(--gold);color:#060503;}
+.sc.dn{border-color:var(--gold-dim);background:transparent;color:var(--gold-dim);}
+.sl{font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-muted);white-space:nowrap;}
+.sl.act{color:var(--gold);}
+.sline{width:20px;height:1px;background:var(--border);margin:0 4px;margin-bottom:16px;flex-shrink:0;}
+
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.divider span{font-size:10px;color:var(--text-muted);letter-spacing:0.16em;text-transform:uppercase;white-space:nowrap;}
+
+.cal-day{text-align:center;padding:8px 2px;font-size:14px;font-family:'Jost',sans-serif;border-radius:2px;line-height:1.3;touch-action:manipulation;transition:background 0.1s,color 0.1s;}
+
+.badge{display:inline-block;padding:4px 10px;font-size:10px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;}
+.bp{border:1px solid var(--gold-dim);color:var(--gold);background:rgba(226,184,74,0.12);}
+.bc{border:1px solid #3b6d11;color:#7db840;background:rgba(59,109,17,0.12);}
+
+.pg{padding:18px 16px 48px;}
+.pt2{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:300;color:var(--text);letter-spacing:0.04em;margin-bottom:6px;}
+.gl{width:36px;height:1px;background:var(--gold);margin:10px 0 18px;}
+.sec{font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#c09840;margin-bottom:12px;font-weight:500;}
+.leg{font-size:13px;display:flex;align-items:center;gap:6px;letter-spacing:0.04em;}
+
+/* Grid helpers */
+.sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px;margin-bottom:24px;}
+.pkg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+.tg{display:flex;flex-wrap:wrap;gap:7px;}
+.atg{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.rrow{display:flex;align-items:flex-end;gap:10px;flex-wrap:wrap;}
+.rbtns{display:flex;gap:8px;}
+
+/* MOBILE */
+@media(max-width:580px){
+  .hdr{padding:10px 12px;}
+  .logo-img{height:52px;max-width:160px;}
+  .logo-ph{font-size:15px;}
+  .pg{padding:14px 12px 48px;}
+  .pt2{font-size:24px;}
+  .card{padding:12px;}
+  .sg{grid-template-columns:repeat(2,1fr) !important;gap:7px;}
+  .pkg-grid{grid-template-columns:1fr !important;}
+  .fr{grid-template-columns:1fr !important;}
+  .tg{gap:6px;}
+  .tg .tc{padding:11px 6px;font-size:12px;}
+  .atg{grid-template-columns:repeat(3,1fr) !important;gap:6px;}
+  .atg .atc{padding:11px 6px;font-size:12px;}
+  .rrow{flex-direction:column !important;gap:8px !important;}
+  .rrow>div{width:100%;}
+  .rbtns{width:100%;}
+  .rbtns button{flex:1;}
+  .sline{width:12px;}
+  .sl{font-size:8px;}
+  .sc{width:24px;height:24px;font-size:10px;}
+  .bg{padding:12px 14px;font-size:11px;}
+  .bo{padding:10px 10px;font-size:10px;}
+  .ct{font-size:10px;padding:14px 10px;letter-spacing:0.12em;max-width:none;}
+  .pn{font-size:20px;} .pp{font-size:18px;}
+}
+@media(max-width:360px){
+  .sg{grid-template-columns:repeat(2,1fr) !important;}
+  .atg{grid-template-columns:repeat(2,1fr) !important;}
+}
+</style>
+</head>
+<body>
+<div class="app" id="root"></div>
+<script>
+const PIN="1209";
+const MONTHS=["January","February","March","April","May","June","July","August","September","October","November","December"];
+const DS=["Su","Mo","Tu","We","Th","Fr","Sa"];
+const PKG_IDS=["family","graduation","newborn","maternity","spiritual"];
+const ET_IDS=["event","grand","wedding"];
+const SESSIONS=[
+  {id:"portrait",  label:"Headshots & Portraits"},
+  {id:"family",    label:"Family Session"},
+  {id:"graduation",label:"Graduation"},
+  {id:"newborn",   label:"Newborn"},
+  {id:"maternity", label:"Maternity"},
+  {id:"wedding",   label:"Intimate Weddings"},
+  {id:"proposal",  label:"Proposal & Engagement"},
+  {id:"event",     label:"Event Coverage"},
+  {id:"grand",     label:"Grand Opening"},
+  {id:"branding",  label:"Business & Branding"},
+  {id:"product",   label:"Product Photography"},
+  {id:"spiritual", label:"Spiritual"},
+];
+const PKGS=[
+  {id:"mini",name:"Mini Session",price:"$185",details:["30 minutes","20 edited images","One outfit","Digital delivery"]},
+  {id:"full",name:"Full Session",price:"$260",details:["60 minutes","50 edited images","Outfit change welcome","Digital delivery"]},
+];
+const TIMES=["7:00 AM","7:30 AM","8:00 AM","8:30 AM","9:00 AM","9:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 AM","12:00 PM","12:30 PM","1:00 PM","1:30 PM","2:00 PM","2:30 PM","3:00 PM","3:30 PM","4:00 PM","4:30 PM","5:00 PM","5:30 PM","6:00 PM","6:30 PM","7:00 PM","7:30 PM","8:00 PM","8:30 PM","9:00 PM"];
+
+function tod(){const d=new Date();d.setHours(0,0,0,0);return d;}
+function dk(y,m,d){return`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;}
+function pk(k){const[y,m,d]=k.split('-');return new Date(+y,+m-1,+d);}
+function dim(y,m){return new Date(y,m+1,0).getDate();}
+function fdow(y,m){return new Date(y,m,1).getDay();}
+function fd(k){const d=pk(k);return d.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});}
+
+// Unified storage key - migrate old data
+const SK='tml828_v11';
+function loadData(){
+  // Try to load from new key first
+  try{const r=localStorage.getItem(SK);if(r){const d=JSON.parse(r);if(!d.blockedTimes)d.blockedTimes={};if(!d.bookings)d.bookings=[];if(!d.blockedDates)d.blockedDates={};return d;}}catch(e){}
+  // Migrate from any older key
+  for(const k of['tml828_v10','tml828_v9','tml828_v8']){
+    try{const r=localStorage.getItem(k);if(r){const d=JSON.parse(r);if(!d.blockedTimes)d.blockedTimes={};if(!d.bookings)d.bookings=[];if(!d.blockedDates)d.blockedDates={};
+    // Save under new key immediately
+    localStorage.setItem(SK,JSON.stringify(d));return d;}}catch(e){}
+  }
+  return{blockedDates:{},blockedTimes:{},bookings:[],logoDataUrl:null};
+}
+function save(data){try{localStorage.setItem(SK,JSON.stringify(data));}catch(e){}}
+
+let S={
+  view:'book',loggedIn:false,
+  data:loadData(),
+  bk:{ses:null,custom:'',pkg:null,date:null,time:null,endTime:null,cusTime:'',useCus:false,form:{},step:1},
+  cal:{m:new Date().getMonth(),y:new Date().getFullYear()},
+  acal:{m:new Date().getMonth(),y:new Date().getFullYear()},
+  aDate:null,
+  pin:'',pinErr:'',fErr:{},
+  editId:null,
+  custEditId:null,
+  settingsOpen:false,
+  openSection:null,
+  cancelConfirmId:null,
+};
+
+function isBlkDay(k){return!!S.data.blockedDates[k];}
+function isBlkTime(dk2,t){return!!(S.data.blockedTimes[dk2]&&S.data.blockedTimes[dk2].includes(t));}
+// Get all confirmed booking times for a date (to auto-block on customer time picker)
+function confirmedTimesForDate(dateKey){
+  return S.data.bookings
+    .filter(b=>b.date===dateKey&&b.status==='confirmed')
+    .map(b=>b.time)
+    .filter(Boolean);
+}
+function dayStatus(y,m,d){
+  const t=tod(),dt=new Date(y,m,d);
+  if(dt<=t)return'past';
+  const k=dk(y,m,d);
+  if(isBlkDay(k))return'blocked';
+  return'available';
+}
+function needsPkg(ses){return ses&&PKG_IDS.includes(ses.id);}
+function needsET(ses){return ses&&ET_IDS.includes(ses.id);}
+function stepLabels(ses){const l=['Session'];if(needsPkg(ses))l.push('Package');l.push('Date & Time','Your Info','Done');return l;}
+
+function logoH(admin=false){
+  if(S.data.logoDataUrl)return`<img class="logo-img" src="${S.data.logoDataUrl}" alt="Through My Lens 828">`;
+  if(admin)return`<div onclick="document.getElementById('li').click()" style="border:1px dashed var(--border-gold);padding:9px 14px;cursor:pointer;display:flex;align-items:center;gap:8px;touch-action:manipulation;"><span style="font-size:18px;">📷</span><div style="font-size:13px;color:var(--gold);">Upload Logo</div></div><input type="file" id="li" accept="image/*" style="display:none;" onchange="window.upLogo(event)">`;
+  // No logo uploaded — show styled text brand mark
+  return`<div style="display:flex;flex-direction:column;line-height:1;">
+    <span style="font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--gold);letter-spacing:0.05em;">Through My Lens 828</span>
+    <span style="font-family:'Jost',sans-serif;font-size:8px;font-weight:400;letter-spacing:0.38em;color:var(--gold-dim);text-transform:uppercase;margin-top:3px;">Photography</span>
+  </div>`;
+}
+function hdr(back,backFn,admin=false){
+  return`<div class="hdr"><div>${logoH(admin)}</div>${back?`<button class="bgh" onclick="${backFn}()">${back}</button>`:`<button class="bo" onclick="window.goAdmin()">Photographer Login</button>`}</div>`;
+}
+function stepBar(step,ses){
+  const labs=stepLabels(ses);
+  return`<div class="sb">${labs.map((s,i)=>{const n=i+1,act=step===n,dn=step>n;return`<div style="display:flex;align-items:center;"><div class="sn"><div class="sc ${act?'act':dn?'dn':''}">${dn?'✓':n}</div><div class="sl ${act?'act':''}">${s}</div></div>${i<labs.length-1?`<div class="sline"></div>`:''}</div>`;}).join('')}</div>`;
+}
+
+function render(){
+  document.getElementById('root').innerHTML=S.view==='book'?renderBook():renderAdmin();
+}
+
+/* ── BOOK ── */
+function renderBook(){
+  // Customer editing their own booking
+  if(S.custEditId){
+    return`${hdr('← Back','window.goHome',false)}<div class="pg">${sCustEdit(S.custEditId)}</div>`;
+  }
+  const step=S.bk.step,ses=S.bk.ses,labs=stepLabels(ses),np=needsPkg(ses);
+  let c='';
+  if(step===1)c=s1();
+  else if(step===2&&np)c=s2pkg();
+  else if((step===2&&!np)||(step===3&&np))c=s2dt();
+  else if((step===3&&!np)||(step===4&&np))c=s3info();
+  else c=s4done();
+  const showBack=step>1&&step<labs.length;
+  return`${hdr(showBack?'← Back':null,showBack?'window.prevStep':null,false)}<div class="pg">${stepBar(step,ses)}${c}</div>`;
+}
+
+function s1(){
+  const b=S.bk,isO=b.ses?.id==='other';
+  return`<div class="pt2">Select your session type</div><div class="gl"></div>
+  <div style="display:flex;justify-content:center;margin-bottom:10px;">
+    <div class="ct ${isO?'sel':''}" onclick="window.pickSes('other')">${isO?'✓ &nbsp;':''}Don't see your session? Request it here</div>
+  </div>
+  ${isO?`<div style="max-width:420px;margin:12px auto 0;">
+    <label>Describe your session *</label>
+    <input type="text" placeholder="e.g. Quinceañera, Boudoir, Pet photography…" value="${b.custom||''}" oninput="S.bk.custom=this.value;window.updBtn();">
+    <div style="font-size:12px;color:var(--text-muted);margin-top:5px;">Noha will follow up to confirm the details.</div>
+  </div>`:'<div style="height:12px;"></div>'}
+  <div class="divider"><span>or choose from our sessions</span></div>
+  <div class="sg">
+    ${SESSIONS.map(s=>`<div class="st ${b.ses?.id===s.id?'sel':''}" onclick="window.pickSes('${s.id}')">${b.ses?.id===s.id?'✓ ':''}${s.label}</div>`).join('')}
+  </div>
+  <div style="display:flex;justify-content:flex-end;">
+    <button id="s1btn" class="bg" onclick="window.nextStep()" ${!b.ses||(b.ses.id==='other'&&!b.custom?.trim())?'disabled':''}>Continue →</button>
+  </div>`;
+}
+
+function s2pkg(){
+  const b=S.bk,sl=b.ses?.label||b.custom;
+  return`<div class="pt2">Choose your package</div>
+  <div style="font-size:14px;color:#9a7830;margin-bottom:4px;">Session: <span style="color:var(--gold);">${sl}</span></div><div class="gl"></div>
+  <div class="pkg-grid">
+    ${PKGS.map(p=>`<div class="pt ${b.pkg?.id===p.id?'sel':''}" onclick="window.pickPkg('${p.id}')">
+      ${b.pkg?.id===p.id?`<div class="pck">✓</div>`:''}
+      <div class="pn">${p.name}</div><div class="pp">${p.price}</div>
+      <div class="pd">${p.details.map(d=>`• ${d}`).join('<br>')}</div>
+    </div>`).join('')}
+  </div>
+  <div style="display:flex;justify-content:space-between;">
+    <button class="bo" onclick="window.prevStep()">← Back</button>
+    <button class="bg" onclick="window.nextStep()" ${!b.pkg?'disabled':''}>Continue →</button>
+  </div>`;
+}
+
+function s2dt(){
+  const b=S.bk,{y,m}=S.cal,d2=dim(y,m),f=fdow(y,m),t0=tod(),prev=(y===t0.getFullYear()&&m===t0.getMonth());
+  const ne=needsET(b.ses);
+
+  const cal=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;">
+    <button class="bo" onclick="window.calNav(-1)" ${prev?'disabled':''} style="padding:8px 14px;font-size:18px;">‹</button>
+    <div style="font-size:15px;font-weight:600;color:var(--gold);letter-spacing:0.14em;">${MONTHS[m].toUpperCase()} ${y}</div>
+    <button class="bo" onclick="window.calNav(1)" style="padding:8px 14px;font-size:18px;">›</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:6px;">
+    ${DS.map(d=>`<div style="text-align:center;font-size:12px;color:#b08830;padding:3px 0;font-weight:600;">${d}</div>`).join('')}
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:3px;">
+    ${Array(f).fill('<div></div>').join('')}
+    ${Array(d2).fill(0).map((_,i)=>{
+      const d=i+1,key=dk(y,m,d),st=dayStatus(y,m,d),sel=b.date===key,ok=st==='available';
+      let bg='transparent',col='#2a1e08',bdr='transparent',cur='default',lbl=String(d);
+      if(ok){col='#ddb84a';bdr='#5a4818';cur='pointer';bg='rgba(226,184,74,0.07)';}
+      if(sel){bg='var(--gold)';col='#060503';bdr='var(--gold)';}
+      if(st==='blocked'){bg='rgba(163,45,45,0.14)';col='#a03030';bdr='#3a1010';lbl=`<div style="font-size:8px;line-height:1.1;">✕</div>${d}`;}
+      return`<div class="cal-day" onclick="${ok?`window.pickDate('${key}')`:''}" style="background:${bg};color:${col};border:1px solid ${bdr};cursor:${cur};${sel?'font-weight:700;':''}">${lbl}</div>`;
+    }).join('')}
+  </div>
+  <div style="display:flex;gap:16px;margin-top:14px;flex-wrap:wrap;">
+    <span class="leg" style="color:#ddb84a;"><span style="width:13px;height:13px;border:1px solid #5a4818;background:rgba(226,184,74,0.07);border-radius:2px;display:inline-block;"></span>Available</span>
+    <span class="leg" style="color:#c06060;"><span style="width:13px;height:13px;background:rgba(163,45,45,0.14);border:1px solid #3a1010;border-radius:2px;display:inline-block;text-align:center;font-size:8px;line-height:13px;">✕</span>Blocked</span>
+  </div>`;
+
+  const manualBlk=b.date?(S.data.blockedTimes[b.date]||[]):[];
+  const confirmedBlk=b.date?confirmedTimesForDate(b.date):[];
+  const blkT=[...new Set([...manualBlk,...confirmedBlk])];
+  const si=b.time?TIMES.indexOf(b.time):-1;
+  const timeSec=b.date?`<div style="margin-top:20px;">
+    <div class="sec">${ne?'Select start time':'Available times'} — ${fd(b.date)}</div>
+    <div class="tg" style="margin-bottom:${ne?'16px':'0'};">
+      ${TIMES.map(t=>{const sel=!b.useCus&&b.time===t,blk=blkT.includes(t);
+        if(blk)return`<div class="tc blk">✕ ${t}</div>`;
+        return`<div class="tc ${sel?'sel':''}" onclick="window.pickTime('${t}')">${t}</div>`;
+      }).join('')}
+    </div>
+    ${ne&&b.time?`<div style="border-top:1px solid var(--border);padding-top:14px;margin-top:4px;">
+      <div class="sec">Select end time</div>
+      <div class="tg" style="margin-bottom:16px;">
+        ${TIMES.filter((_,i)=>i>si).map(t=>{const sel=b.endTime===t,blk=blkT.includes(t);
+          if(blk)return`<div class="tc blk">✕ ${t}</div>`;
+          return`<div class="tc ${sel?'sel':''}" onclick="window.pickEndTime('${t}')">${t}</div>`;
+        }).join('')}
+      </div>
+    </div>`:''}
+    <div style="border-top:1px solid var(--border);padding-top:14px;margin-top:${ne&&b.time?'0':'4px'};">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:${b.useCus?'12px':'0'};">
+        <input type="checkbox" ${b.useCus?'checked':''} onchange="window.toggleCus(this.checked)">
+        <span style="font-size:14px;color:#c0a050;">Request a different time</span>
+      </div>
+      ${b.useCus?`<div style="max-width:320px;"><label>Preferred time *</label>
+        <input type="text" placeholder="e.g. sunrise, after 6 PM…" value="${b.cusTime||''}" oninput="S.bk.cusTime=this.value;">
+        <div style="font-size:12px;color:var(--text-muted);margin-top:4px;">Noha will confirm availability.</div>
+      </div>`:''}
+    </div>
+  </div>`:`<div style="margin-top:16px;padding:16px;background:#0f0c07;border:1px solid #2a2010;font-size:14px;color:var(--text-muted);text-align:center;">Select a date above to see available times</div>`;
+
+  const sl=b.ses?.id==='other'?b.custom:b.ses?.label,pk2=b.pkg?` · ${b.pkg.name}`:'';
+  const ready=b.date&&(!b.useCus?(b.time&&(!ne||b.endTime)):b.cusTime?.trim());
+  return`<div class="pt2">Pick a date & time</div>
+  <div style="font-size:14px;color:#9a7830;margin-bottom:4px;">${sl}${pk2}</div><div class="gl"></div>
+  <div class="card" style="margin-bottom:4px;">${cal}</div>
+  ${timeSec}
+  <div style="display:flex;justify-content:space-between;margin-top:20px;">
+    <button class="bo" onclick="window.prevStep()">← Back</button>
+    <button class="bg" onclick="window.nextStep()" ${!ready?'disabled':''}>Continue →</button>
+  </div>`;
+}
+
+function s3info(){
+  const f=S.bk.form||{},e=S.fErr||{};
+  function fld(id,lbl,type,ph,req=true){return`<div><label>${lbl}${req?' *':''}</label><input type="${type}" value="${f[id]||''}" placeholder="${ph}" class="${e[id]?'err':''}" oninput="S.bk.form['${id}']=this.value;">${e[id]?`<div class="em">${e[id]}</div>`:''}</div>`;}
+  const b=S.bk,sl=b.ses?.id==='other'?b.custom:b.ses?.label,pk2=b.pkg?` · ${b.pkg.name}`:'';
+  const tl=b.useCus?`${b.cusTime} (requested)`:(b.endTime?`${b.time} – ${b.endTime}`:b.time);
+  return`<div class="pt2">Your information</div>
+  <div style="font-size:14px;color:#9a7830;margin-bottom:4px;">${sl}${pk2} · ${fd(b.date)} · ${tl}</div><div class="gl"></div>
+  <div class="fr">${fld('firstName','First name','text','Jane')}${fld('lastName','Last name','text','Smith')}</div>
+  <div class="fr">${fld('email','Email address','email','jane@example.com')}${fld('phone','Phone number','tel','(216) 555-0100')}</div>
+  <div style="margin-bottom:14px;"><label>Instagram <span style="text-transform:none;letter-spacing:0.02em;color:#4a3a18;">(optional)</span></label><input type="text" placeholder="@yourusername" value="${f.instagram||''}" oninput="S.bk.form.instagram=this.value;"></div>
+  <div style="margin-bottom:14px;"><label>How did you hear about Noha? <span style="text-transform:none;letter-spacing:0.02em;color:#4a3a18;">(optional)</span></label>
+    <select onchange="S.bk.form.howHeard=this.value;"><option value="">Select one…</option>
+      ${['Instagram','Facebook','Friend or family referral','Google search','Returning client','Other'].map(o=>`<option value="${o.toLowerCase()}" ${f.howHeard===o.toLowerCase()?'selected':''}>${o}</option>`).join('')}
+    </select>
+  </div>
+  <div style="margin-bottom:22px;"><label>Your vision <span style="text-transform:none;letter-spacing:0.02em;color:#4a3a18;">(optional)</span></label>
+    <textarea rows="3" placeholder="Ideas, locations, outfits, or special requests…" oninput="S.bk.form.notes=this.value;" style="resize:vertical;">${f.notes||''}</textarea>
+  </div>
+  <div style="display:flex;justify-content:space-between;">
+    <button class="bo" onclick="window.prevStep()">← Back</button>
+    <button class="bg" onclick="window.submitBk()">Submit Request →</button>
+  </div>`;
+}
+
+function s4done(){
+  const b=S.bk,sl=b.ses?.id==='other'?b.custom:b.ses?.label,pk2=b.pkg?` · ${b.pkg.name}`:'';
+  const tl=b.useCus?`${b.cusTime} (requested)`:(b.endTime?`${b.time} – ${b.endTime}`:b.time);
+  // Save the booking ID so customer can manage it
+  const lastId=S.data.bookings[S.data.bookings.length-1]?.id||'';
+  return`<div style="text-align:center;padding:24px 0;">
+    <div style="width:56px;height:56px;border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:22px;color:var(--gold);">✓</div>
+    <div class="pt2">Request Sent</div>
+    <div style="width:36px;height:1px;background:var(--gold);margin:14px auto 16px;"></div>
+    <div style="font-size:14px;color:#9a7830;margin-bottom:26px;">Thank you, ${b.form.firstName}. Noha will be in touch shortly to confirm your session.</div>
+    <div class="card" style="text-align:left;margin-bottom:20px;">
+      <div class="sec" style="margin-bottom:14px;">Booking Summary</div>
+      <div style="display:grid;gap:10px;">
+        ${[['Session',sl+pk2],['Date',fd(b.date)],['Time',tl],['Name',`${b.form.firstName} ${b.form.lastName}`],['Email',b.form.email],['Phone',b.form.phone]].map(([k,v])=>`
+          <div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid #1e1808;padding-bottom:9px;">
+            <span style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#6a5228;">${k}</span>
+            <span style="font-size:14px;color:var(--gold);text-align:right;">${v}</span>
+          </div>`).join('')}
+      </div>
+    </div>
+    <div style="background:#0d0a05;border:1px solid var(--border-gold);padding:16px;margin-bottom:20px;text-align:left;">
+      <div class="sec" style="color:var(--gold);margin-bottom:8px;">Manage your booking</div>
+      <div style="font-size:13px;color:#9a7830;margin-bottom:14px;">Need to make changes or cancel? Your booking reference: <span style="color:var(--gold);font-weight:600;">#${lastId.slice(-6)}</span>.</div>
+      ${S.cancelConfirmId===lastId
+        ? `<div style="background:rgba(163,45,45,0.15);border:1px solid #5a1a1a;padding:14px;margin-bottom:10px;border-radius:2px;">
+            <div style="font-size:14px;color:#f06060;margin-bottom:12px;">Are you sure you want to cancel this booking?</div>
+            <div style="display:flex;gap:10px;">
+              <button class="bd" onclick="window.custCancelConfirm('${lastId}')" style="flex:1;">Yes, Cancel Booking</button>
+              <button class="bo" onclick="window.custCancelAbort()" style="flex:1;">No, Keep It</button>
+            </div>
+          </div>`
+        : `<div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <button class="bedit" onclick="window.custEdit('${lastId}')" style="flex:1;min-width:120px;">Edit My Booking</button>
+            <button class="bd" onclick="window.custCancel('${lastId}')" style="flex:1;min-width:120px;">Cancel Booking</button>
+          </div>`}
+    </div>
+    <button class="bg" onclick="window.goHome()">Start New Booking</button>
+  </div>`;
+}
+
+function sCustEdit(id){
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(!b||b.status==='cancelled')return`<div class="pt2">Booking not found</div>`;
+  const f=b.form||{};
+  const sl=b.ses?.id==='other'?b.custom:b.ses?.label,pk2=b.pkg?` · ${b.pkg.name}`:'';
+  return`<div class="pt2">Edit Your Booking</div>
+  <div style="font-size:14px;color:#9a7830;margin-bottom:4px;">${sl}${pk2} · #${id.slice(-6)}</div><div class="gl"></div>
+  <div style="font-size:13px;color:#c09840;background:#0d0a05;border:1px solid var(--border);padding:12px;margin-bottom:16px;">
+    Status: <span style="color:${b.status==='confirmed'?'#7db840':'var(--gold)'};">${b.status}</span>
+    ${b.status==='confirmed'?' — Your session is confirmed! Changes will be reviewed by Noha.':''}
+  </div>
+  <div class="fr"><div><label>First name</label><input type="text" id="ce_fn" value="${f.firstName||''}" oninput="S.custEdit=S.custEdit||{};S.custEdit.firstName=this.value;"></div>
+    <div><label>Last name</label><input type="text" id="ce_ln" value="${f.lastName||''}" oninput="S.custEdit=S.custEdit||{};S.custEdit.lastName=this.value;"></div></div>
+  <div class="fr"><div><label>Email</label><input type="email" id="ce_em" value="${f.email||''}" oninput="S.custEdit=S.custEdit||{};S.custEdit.email=this.value;"></div>
+    <div><label>Phone</label><input type="tel" id="ce_ph" value="${f.phone||''}" oninput="S.custEdit=S.custEdit||{};S.custEdit.phone=this.value;"></div></div>
+  <div style="margin-bottom:16px;"><label>Instagram (optional)</label><input type="text" id="ce_ig" value="${f.instagram||''}" oninput="S.custEdit=S.custEdit||{};S.custEdit.instagram=this.value;"></div>
+  <div style="margin-bottom:20px;"><label>Notes / changes requested</label><textarea rows="3" id="ce_no" oninput="S.custEdit=S.custEdit||{};S.custEdit.notes=this.value;" style="resize:vertical;">${f.notes||''}</textarea></div>
+  <div style="font-size:13px;color:#8a7040;margin-bottom:16px;">To change your date or time, please contact Noha directly.</div>
+  <div style="display:flex;gap:10px;">
+    <button class="bo" onclick="window.goHome()">← Cancel</button>
+    <button class="bg" onclick="window.saveCustEdit('${id}')" style="flex:1;">Save Changes</button>
+  </div>`;
+}
+
+/* ── ADMIN ── */
+function renderAdmin(){
+  // Always reload fresh data when entering admin view
+  S.data=loadData();
+
+  if(!S.loggedIn){return`${hdr(null,null,false)}<div class="pg" style="max-width:340px;margin:0 auto;text-align:center;padding-top:50px;">
+    <div style="font-size:12px;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-muted);margin-bottom:12px;">Secure Access</div>
+    <div class="pt2">Photographer Login</div>
+    <div style="width:36px;height:1px;background:var(--gold);margin:12px auto 26px;"></div>
+    <label style="text-align:left;display:block;margin-bottom:7px;">Enter your PIN</label>
+    <input type="password" maxlength="4" placeholder="••••" style="text-align:center;font-size:26px;letter-spacing:0.5em;" oninput="S.pin=this.value;" onkeydown="if(event.key==='Enter')window.doLogin();">
+    ${S.pinErr?`<div class="em" style="margin-top:8px;">${S.pinErr}</div>`:''}
+    <button class="bg" onclick="window.doLogin()" style="width:100%;margin-top:16px;">Sign In →</button>
+  </div>`;}
+
+  const d=S.data;
+  const pending=d.bookings.filter(b=>b.status==='pending');
+  const confirmed=d.bookings.filter(b=>b.status==='confirmed');
+  const {y,m}=S.acal,d2=dim(y,m),f=fdow(y,m),blkCount=Object.keys(d.blockedDates).length;
+  const t0=tod();
+
+  // Day range options — next 2 years
+  const allDayOpts=(()=>{const opts=[];const end=new Date(t0);end.setFullYear(end.getFullYear()+2);const cur=new Date(t0);cur.setDate(cur.getDate()+1);while(cur<=end){const yy=cur.getFullYear(),mm2=cur.getMonth(),dd=cur.getDate();opts.push(`<option value="${dk(yy,mm2,dd)}">${MONTHS[mm2].slice(0,3)} ${dd}, ${yy}</option>`);cur.setDate(cur.getDate()+1);}return opts.join('');})();
+
+  const adminCal=`<div class="card" style="margin-bottom:14px;">
+    <div class="sec">Block / Unblock Days</div>
+    <div style="font-size:13px;color:#c09840;margin-bottom:14px;"><span style="color:var(--gold);">1st tap</span> on a date = open its time slots below. <span style="color:var(--gold);">2nd tap</span> on the same date = block or unblock the full day.</div>
+    <!-- Range tool -->
+    <div style="background:#0d0a05;border:1px solid var(--border);padding:14px;margin-bottom:14px;border-radius:2px;">
+      <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#c09840;margin-bottom:10px;font-weight:500;">Block a range of days</div>
+      <div class="rrow">
+        <div style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:150px;"><label style="margin-bottom:0;">From</label><select id="drFrom"><option value="">Start date…</option>${allDayOpts}</select></div>
+        <div style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:150px;"><label style="margin-bottom:0;">To</label><select id="drTo"><option value="">End date…</option>${allDayOpts}</select></div>
+        <div class="rbtns" style="margin-top:20px;">
+          <button class="bg" onclick="window.blkDayRange(true)" style="padding:10px 14px;font-size:11px;">Block</button>
+          <button class="bd" onclick="window.blkDayRange(false)" style="padding:10px 12px;font-size:11px;">Unblock</button>
+        </div>
+      </div>
+    </div>
+    <!-- Calendar -->
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+      <button class="bo" onclick="window.acalNav(-1)" style="padding:6px 12px;font-size:17px;">‹</button>
+      <div style="font-size:15px;font-weight:600;color:var(--gold);letter-spacing:0.14em;">${MONTHS[m].toUpperCase()} ${y}</div>
+      <button class="bo" onclick="window.acalNav(1)" style="padding:6px 12px;font-size:17px;">›</button>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px;">
+      ${DS.map(d=>`<div style="text-align:center;font-size:12px;color:#b08830;padding:3px 0;font-weight:600;">${d}</div>`).join('')}
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;">
+      ${Array(f).fill('<div></div>').join('')}
+      ${Array(d2).fill(0).map((_,i)=>{
+        const day=i+1,key=dk(y,m,day),st=dayStatus(y,m,day),past=st==='past';
+        let bg,col,bdr,cur,lbl=String(day);
+        if(past){bg='transparent';col='#2a2008';bdr='transparent';cur='default';}
+        else if(st==='blocked'){bg='rgba(163,45,45,0.22)';col='#e24b4a';bdr='#8a1a1a';cur='pointer';lbl=`<div style="font-size:8px;line-height:1.1;">✕</div>${day}`;}
+        else if(st==='booked'){bg='rgba(59,109,17,0.2)';col='#7db840';bdr='#2a5010';cur='default';}
+        else{bg='rgba(226,184,74,0.09)';col='var(--gold)';bdr='#5a4818';cur='pointer';}
+        const ok=!past&&st!=='booked',isSel=S.aDate===key;
+        if(isSel&&!past){bdr='#ffffff';bg=bg==='transparent'?'rgba(255,255,255,0.06)':bg;}
+        return`<div onclick="${ok?`window.aPickDay('${key}')`:''}" style="text-align:center;padding:8px 2px;border:${isSel?'2px':'1px'} solid ${bdr};background:${bg};color:${col};cursor:${cur};font-size:13px;border-radius:2px;line-height:1.3;touch-action:manipulation;${isSel?'font-weight:700;':''}">${lbl}</div>`;
+      }).join('')}
+    </div>
+    <div style="display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;">
+      <span class="leg" style="color:#ddb84a;"><span style="width:12px;height:12px;background:rgba(226,184,74,0.09);border:1px solid #5a4818;border-radius:2px;display:inline-block;"></span>Available</span>
+      <span class="leg" style="color:#e24b4a;"><span style="width:12px;height:12px;background:rgba(163,45,45,0.22);border:1px solid #8a1a1a;border-radius:2px;display:inline-block;text-align:center;font-size:8px;line-height:12px;">✕</span>Blocked</span>
+      <span class="leg" style="color:#7db840;"><span style="width:12px;height:12px;background:rgba(59,109,17,0.2);border:1px solid #2a5010;border-radius:2px;display:inline-block;"></span>Confirmed</span>
+    </div>
+  </div>`;
+
+  const sel=S.aDate;
+  const adminTimes=`<div class="card" style="margin-bottom:14px;">
+    <div class="sec">Block Time Slots</div>
+    <div style="font-size:13px;color:#c09840;margin-bottom:12px;">${sel?`<span style="color:var(--gold);font-weight:500;">${fd(sel)}</span> — tap any time to block or unblock it.`:'Select a date on the calendar above to manage its time slots.'}</div>
+    ${sel?`
+    <div style="background:#0d0a05;border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
+      <div style="font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:#c09840;margin-bottom:10px;font-weight:500;">Block a range</div>
+      <div class="rrow">
+        <div style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:120px;"><label style="margin-bottom:0;">From</label><select id="tFrom"><option value="">Start…</option>${TIMES.map(t=>`<option value="${t}">${t}</option>`).join('')}</select></div>
+        <div style="display:flex;flex-direction:column;gap:5px;flex:1;min-width:120px;"><label style="margin-bottom:0;">To</label><select id="tTo"><option value="">End…</option>${TIMES.map(t=>`<option value="${t}">${t}</option>`).join('')}</select></div>
+        <div class="rbtns" style="margin-top:20px;">
+          <button class="bg" onclick="window.blkTimeRange('${sel}',true)" style="padding:10px 14px;font-size:11px;">Block</button>
+          <button class="bd" onclick="window.blkTimeRange('${sel}',false)" style="padding:10px 12px;font-size:11px;">Unblock</button>
+        </div>
+      </div>
+    </div>
+    <div class="atg">
+      ${TIMES.map(t=>{const blk=isBlkTime(sel,t);return`<div class="atc ${blk?'blk':''}" onclick="window.togTime('${sel}','${t}')">${blk?'✕ ':''}${t}</div>`;}).join('')}
+    </div>
+    <div style="display:flex;gap:14px;margin-top:12px;flex-wrap:wrap;">
+      <span class="leg" style="color:#ddb84a;"><span style="width:12px;height:12px;background:rgba(226,184,74,0.08);border:1px solid #5a4818;border-radius:2px;display:inline-block;"></span>Available</span>
+      <span class="leg" style="color:#f06060;"><span style="width:12px;height:12px;background:rgba(163,45,45,0.25);border:1px solid #8a1a1a;border-radius:2px;display:inline-block;"></span>Blocked</span>
+    </div>`
+  :`<div style="padding:14px;border:1px solid #2a2010;text-align:center;font-size:13px;color:#5a4a20;">Select a date above to manage times</div>`}
+  </div>`;
+
+  // Edit modal if editing
+  const editModal=S.editId?renderEditModal(S.editId):'';
+
+  function bCard(b){
+    const sl=b.ses?.id==='other'?b.custom:b.ses?.label,pk2=b.pkg?` · ${b.pkg.name}`:'';
+    const tl=b.useCus?`${b.cusTime} (requested)`:(b.endTime?`${b.time} – ${b.endTime}`:b.time);
+    return`<div class="card" style="margin-bottom:12px;">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+        <div>
+          <div style="font-size:19px;color:#fff8e8;font-family:'Cormorant Garamond',serif;font-weight:400;">${b.form.firstName} ${b.form.lastName}</div>
+          <div style="font-size:13px;color:#c9952a;margin-top:2px;">${sl}${pk2}</div>
+        </div>
+        <span class="badge ${b.status==='pending'?'bp':'bc'}">${b.status}</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px;color:#c09840;margin-bottom:12px;">
+        <span>📅 ${fd(b.date)}</span><span>🕐 ${tl}</span>
+        <span>📧 ${b.form.email}</span><span>📱 ${b.form.phone}</span>
+        ${b.form.instagram?`<span>📸 ${b.form.instagram}</span>`:''}
+        ${b.form.howHeard?`<span>💬 ${b.form.howHeard}</span>`:''}
+      </div>
+      ${b.form.notes?`<div style="font-size:13px;color:#a08040;background:#0f0c07;border:1px solid #1e1808;padding:12px;margin-bottom:12px;line-height:1.7;font-style:italic;">"${b.form.notes}"</div>`:''}
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        ${b.status==='pending'?`<button class="bg" onclick="window.confirmB('${b.id}')" style="padding:10px 18px;font-size:11px;">Confirm</button>`:''}
+        ${b.status==='cancelled'?`<button class="bedit" onclick="window.restoreB('${b.id}')" style="padding:10px 14px;font-size:11px;">Restore</button>`:''}
+        <button class="bedit" onclick="window.startEdit('${b.id}')">Edit</button>
+        <button class="bd" onclick="window.cancelB('${b.id}')">Cancel</button>
+      </div>
+    </div>`;}
+
+  return`${hdr('Sign Out','window.logout',true)}<div class="pg">
+  ${editModal}
+
+  <!-- ⚙ SETTINGS DROPDOWN -->
+  <div style="margin-bottom:16px;">
+    <button onclick="window.togSettings()" style="width:100%;background:#131008;border:1px solid var(--border-gold);color:var(--gold);padding:14px 18px;font-family:'Jost',sans-serif;font-size:12px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:space-between;touch-action:manipulation;">
+      <span>⚙ &nbsp;Settings</span>
+      <span style="font-size:15px;">${S.settingsOpen?'▲':'▼'}</span>
+    </button>
+    <div style="display:${S.settingsOpen?'block':'none'};border:1px solid var(--border-gold);border-top:none;background:#0a0805;padding:16px;">
+
+      <!-- Logo -->
+      <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:10px;font-weight:500;">🖼 Logo</div>
+        ${!S.data.logoDataUrl
+          ? `<div style="font-size:13px;color:#8a7040;margin-bottom:10px;">Upload your logo to show it in the header on this device. Upload again on each device you use.</div>
+             <label class="bg" style="cursor:pointer;display:inline-flex;align-items:center;gap:8px;font-size:11px;">Choose File<input type="file" accept="image/*" style="display:none;" onchange="window.upLogo(event)"></label>`
+          : `<div style="display:flex;align-items:center;gap:12px;">
+               <img src="${S.data.logoDataUrl}" style="height:48px;width:auto;object-fit:contain;background:#0f0c07;padding:4px;border:1px solid #2a2010;">
+               <div>
+                 <div style="font-size:13px;color:#c09840;margin-bottom:6px;">Logo active ✓</div>
+                 <label style="cursor:pointer;font-size:12px;color:var(--gold);text-decoration:underline;">Replace<input type="file" accept="image/*" style="display:none;" onchange="window.upLogo(event)"></label>
+               </div>
+             </div>`}
+      </div>
+
+      <!-- Change PIN -->
+      <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:10px;font-weight:500;">🔑 Change Login PIN</div>
+        <div class="rrow" style="align-items:flex-end;">
+          <div style="flex:1;min-width:120px;"><label style="margin-bottom:5px;">New PIN</label><input type="password" id="newPin" maxlength="4" placeholder="••••" style="text-align:center;font-size:20px;letter-spacing:0.4em;"></div>
+          <div style="flex:1;min-width:120px;"><label style="margin-bottom:5px;">Confirm</label><input type="password" id="confirmPin" maxlength="4" placeholder="••••" style="text-align:center;font-size:20px;letter-spacing:0.4em;"></div>
+          <div class="rbtns" style="margin-top:22px;"><button class="bg" onclick="window.changePin()" style="padding:10px 14px;font-size:11px;">Save PIN</button></div>
+        </div>
+        <div id="pinMsg" style="font-size:12px;margin-top:8px;min-height:18px;"></div>
+      </div>
+
+      <!-- Notifications -->
+      <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:8px;font-weight:500;">🔔 Notification Settings</div>
+        <div style="font-size:13px;color:#8a7040;margin-bottom:12px;">Get notified when a customer books. Edit anytime.</div>
+        <div style="display:grid;gap:10px;">
+          <div><label>Your email for notifications</label><input type="email" id="notifEmail" placeholder="noha@example.com" value="${S.data.notifEmail||''}" oninput="S.data.notifEmail=this.value;"></div>
+          <div><label>Your phone for SMS <span style="text-transform:none;letter-spacing:0;color:#4a3a18;">(optional)</span></label><input type="tel" id="notifPhone" placeholder="(216) 555-0100" value="${S.data.notifPhone||''}" oninput="S.data.notifPhone=this.value;"></div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <button class="bg" onclick="window.saveNotifSettings()" style="padding:10px 16px;font-size:11px;">Save</button>
+            <div id="notifMsg" style="font-size:12px;min-height:16px;"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SMS via Twilio -->
+      <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:6px;font-weight:500;">💬 SMS Notifications — Twilio</div>
+        <div style="font-size:13px;color:#8a7040;margin-bottom:4px;">~$2-3/month total. Sign up at <span style="color:var(--gold);">twilio.com</span> → get a phone number → copy your Account SID, Auth Token, and Twilio number below.</div>
+        <div style="font-size:12px;color:#5a4a18;margin-bottom:12px;">Noha and customers both get texts automatically when bookings are made and confirmed.</div>
+        <div style="display:grid;gap:10px;">
+          <div><label>Account SID</label><input type="text" id="twilioSid" placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" value="${S.data.twilioSid||''}" oninput="S.data.twilioSid=this.value;save(S.data);"></div>
+          <div><label>Auth Token</label><input type="password" id="twilioToken" placeholder="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" value="${S.data.twilioToken||''}" oninput="S.data.twilioToken=this.value;save(S.data);"></div>
+          <div><label>Twilio Phone Number <span style="text-transform:none;color:#5a4a18;">(with +1 country code)</span></label><input type="text" id="twilioFrom" placeholder="+12165550100" value="${S.data.twilioFrom||''}" oninput="S.data.twilioFrom=this.value;save(S.data);"></div>
+        </div>
+      </div>
+
+      <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:8px;font-weight:500;">🧪 Test SMS</div>
+        <div style="font-size:13px;color:#8a7040;margin-bottom:12px;">Sends a test text to Noha's phone. Only works when app is deployed on Netlify with environment variables set.</div>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <button class="bedit" onclick="window.testEmail()" style="padding:10px 14px;font-size:11px;">Send Test Text</button>
+          <div id="emailTestMsg" style="font-size:12px;min-height:16px;"></div>
+        </div>
+      </div>
+
+      <!-- App link -->
+      <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:6px;font-weight:500;">🔗 App URL</div>
+        <div style="font-size:13px;color:#8a7040;margin-bottom:10px;">Included in email notifications as a direct link to the admin panel.</div>
+        <div><label>Your hosted URL</label><input type="text" id="appUrl" placeholder="https://yoursite.com/booking.html" value="${S.data.appUrl||window.location.href.split('?')[0]}" oninput="S.data.appUrl=this.value;save(S.data);"></div>
+      </div>
+
+      <!-- iPhone Calendar -->
+      <div style="border:1px solid var(--border);padding:14px;border-radius:2px;">
+        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:6px;font-weight:500;">📅 iPhone Calendar</div>
+        <div style="font-size:13px;color:#8a7040;margin-bottom:12px;">Download a .ics file for any confirmed booking and open it on your iPhone to add it to Apple Calendar.</div>
+        ${confirmed.length
+          ? `<div style="display:flex;flex-wrap:wrap;gap:8px;">${confirmed.map(b=>{const sl=b.ses?.id==='other'?b.custom:b.ses?.label;return`<button class="bedit" onclick="window.dlICS('${b.id}')" style="font-size:11px;">⬇ ${b.form.firstName} ${b.form.lastName} · ${fd(b.date)}</button>`;}).join('')}</div>`
+          : `<div style="font-size:13px;color:#5a4a20;">No confirmed bookings yet.</div>`}
+      </div>
+
+    </div>
+  </div>
+
+  <!-- STATS — clickable to expand booking list -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+    <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#8a7040;">Bookings</div>
+    <button onclick="window.refreshAdmin()" style="background:none;border:none;color:var(--gold-dim);font-size:12px;cursor:pointer;letter-spacing:0.08em;font-family:'Jost',sans-serif;touch-action:manipulation;">↻ Refresh</button>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px;" class="stats-grid">
+    <div class="card" onclick="window.togSection('pending')" style="text-align:center;padding:16px 8px;cursor:pointer;border-color:${S.openSection==='pending'?'var(--gold)':'var(--border)'};">
+      <div style="font-size:28px;font-weight:600;color:#e2b84a;font-family:'Cormorant Garamond',serif;">${pending.length}</div>
+      <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#c09840;margin-top:4px;">Pending ${S.openSection==='pending'?'▲':'▼'}</div>
+    </div>
+    <div class="card" onclick="window.togSection('confirmed')" style="text-align:center;padding:16px 8px;cursor:pointer;border-color:${S.openSection==='confirmed'?'#7db840':'var(--border)'};">
+      <div style="font-size:28px;font-weight:600;color:#7db840;font-family:'Cormorant Garamond',serif;">${confirmed.length}</div>
+      <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#c09840;margin-top:4px;">Confirmed ${S.openSection==='confirmed'?'▲':'▼'}</div>
+    </div>
+    <div class="card" style="text-align:center;padding:16px 8px;">
+      <div style="font-size:28px;font-weight:600;color:#e24b4a;font-family:'Cormorant Garamond',serif;">${blkCount}</div>
+      <div style="font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:#c09840;margin-top:4px;">Blocked</div>
+    </div>
+  </div>
+
+  <!-- INLINE BOOKING LISTS under stats -->
+  ${S.openSection==='pending'?`
+    <div style="margin-bottom:18px;">
+      <div class="sec" style="margin-bottom:12px;">Pending Requests (${pending.length})</div>
+      ${pending.length?pending.map(bCard).join(''):`<div style="font-size:14px;color:#6a5228;padding:16px;text-align:center;border:1px solid #2a2010;">No pending requests</div>`}
+    </div>`:''}
+  ${S.openSection==='confirmed'?`
+    <div style="margin-bottom:18px;">
+      <div class="sec" style="margin-bottom:12px;">Confirmed (${confirmed.length})</div>
+      ${confirmed.length?confirmed.map(bCard).join(''):`<div style="font-size:14px;color:#6a5228;padding:16px;text-align:center;border:1px solid #2a2010;">No confirmed bookings</div>`}
+    </div>`:''}
+
+  ${adminCal}${adminTimes}
+  </div>`;
+}
+
+/* ── EDIT MODAL ── */
+function renderEditModal(id){
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(!b)return'';
+  const f=b.form||{};
+  return`<div style="position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;" onclick="if(event.target===this)window.closeEdit()">
+    <div style="background:#131008;border:1px solid var(--border-gold);padding:20px;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;border-radius:2px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--gold);">Edit Booking</div>
+        <button class="bgh" onclick="window.closeEdit()" style="font-size:18px;">✕</button>
+      </div>
+      <div style="font-size:13px;color:#c09840;margin-bottom:16px;">${b.ses?.label||b.custom} · ${fd(b.date)} · ${b.time}</div>
+      <div style="display:grid;gap:12px;">
+        <div class="fr" style="margin-bottom:0;">
+          <div><label>First name</label><input type="text" id="ef_firstName" value="${f.firstName||''}" oninput="S.editForm=S.editForm||{};S.editForm.firstName=this.value;"></div>
+          <div><label>Last name</label><input type="text" id="ef_lastName" value="${f.lastName||''}" oninput="S.editForm=S.editForm||{};S.editForm.lastName=this.value;"></div>
+        </div>
+        <div><label>Email</label><input type="email" id="ef_email" value="${f.email||''}" oninput="S.editForm=S.editForm||{};S.editForm.email=this.value;"></div>
+        <div><label>Phone</label><input type="tel" id="ef_phone" value="${f.phone||''}" oninput="S.editForm=S.editForm||{};S.editForm.phone=this.value;"></div>
+        <div><label>Notes</label><textarea rows="3" id="ef_notes" oninput="S.editForm=S.editForm||{};S.editForm.notes=this.value;" style="resize:vertical;">${f.notes||''}</textarea></div>
+        <div><label>Date</label><input type="date" id="ef_date" value="${b.date||''}" oninput="S.editDate=this.value;"></div>
+        <div><label>Time</label><select id="ef_time" onchange="S.editTime=this.value;">
+          ${TIMES.map(t=>`<option value="${t}" ${b.time===t?'selected':''}>${t}</option>`).join('')}
+        </select></div>
+        <div><label>Status</label><select id="ef_status" onchange="S.editStatus=this.value;">
+          <option value="pending" ${b.status==='pending'?'selected':''}>Pending</option>
+          <option value="confirmed" ${b.status==='confirmed'?'selected':''}>Confirmed</option>
+          <option value="cancelled" ${b.status==='cancelled'?'selected':''}>Cancelled</option>
+        </select></div>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:18px;">
+        <button class="bg" onclick="window.saveEdit('${id}')" style="flex:1;">Save Changes</button>
+        <button class="bd" onclick="window.closeEdit()">Cancel</button>
+      </div>
+    </div>
+  </div>`;
+}
+
+/* ── WINDOW FUNCTIONS ── */
+window.upLogo=(e)=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=(ev)=>{S.data.logoDataUrl=ev.target.result;save(S.data);render();};r.readAsDataURL(f);};
+window.goAdmin=()=>{S.view='admin';S.pin='';S.pinErr='';render();};
+window.goHome=()=>{S.view='book';S.bk={ses:null,custom:'',pkg:null,date:null,time:null,endTime:null,cusTime:'',useCus:false,form:{},step:1};S.fErr={};S.custEditId=null;render();};
+window.logout=()=>{S.loggedIn=false;S.view='book';S.bk={ses:null,custom:'',pkg:null,date:null,time:null,endTime:null,cusTime:'',useCus:false,form:{},step:1};S.custEditId=null;render();};
+
+window.custEdit=(id)=>{S.custEditId=id;S.custEdit={};render();};
+window.custCancel=(id)=>{
+  // Show inline confirmation instead of confirm() which breaks in some browsers/sandboxes
+  S.cancelConfirmId=id;
+  render();
+};
+window.custCancelConfirm=(id)=>{
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(b){b.status='cancelled';save(S.data);}
+  S.cancelConfirmId=null;
+  S.custEditId=null;
+  render();
+};
+window.custCancelAbort=()=>{S.cancelConfirmId=null;render();};
+window.saveCustEdit=(id)=>{
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(!b)return;
+  const fn=document.getElementById('ce_fn')?.value?.trim();
+  const ln=document.getElementById('ce_ln')?.value?.trim();
+  const em=document.getElementById('ce_em')?.value?.trim();
+  const ph=document.getElementById('ce_ph')?.value?.trim();
+  const ig=document.getElementById('ce_ig')?.value?.trim();
+  const no=document.getElementById('ce_no')?.value?.trim();
+  if(fn)b.form.firstName=fn;if(ln)b.form.lastName=ln;
+  if(em)b.form.email=em;if(ph)b.form.phone=ph;
+  b.form.instagram=ig;b.form.notes=no;
+  // Mark as pending review if was confirmed
+  if(b.status==='confirmed')b.status='pending';
+  save(S.data);S.custEditId=null;
+  alert('Your changes have been saved. Noha will be in touch to confirm.');
+  render();
+};
+window.doLogin=()=>{const cur=S.data.adminPin||PIN;if(S.pin===cur){S.loggedIn=true;S.pinErr='';render();}else{S.pinErr='Incorrect PIN. Please try again.';render();}};
+
+window.updBtn=()=>{const btn=document.getElementById('s1btn');if(btn)btn.disabled=!S.bk.ses||(S.bk.ses.id==='other'&&!S.bk.custom?.trim());};
+window.pickSes=(id)=>{if(id==='other')S.bk.ses={id:'other',label:'Custom Session'};else{S.bk.ses=SESSIONS.find(s=>s.id===id);S.bk.custom='';}S.bk.pkg=null;render();};
+window.pickPkg=(id)=>{S.bk.pkg=PKGS.find(p=>p.id===id);render();};
+window.nextStep=()=>{S.bk.step++;render();};
+window.prevStep=()=>{S.bk.step=Math.max(1,S.bk.step-1);render();};
+window.calNav=(dir)=>{let m=S.cal.m+dir,y=S.cal.y;if(m<0){m=11;y--;}if(m>11){m=0;y++;}S.cal={m,y};render();};
+window.acalNav=(dir)=>{let m=S.acal.m+dir,y=S.acal.y;if(m<0){m=11;y--;}if(m>11){m=0;y++;}S.acal={m,y};render();};
+window.pickDate=(key)=>{S.bk.date=key;S.bk.time=null;S.bk.endTime=null;S.bk.cusTime='';S.bk.useCus=false;render();};
+window.pickTime=(t)=>{S.bk.time=t;S.bk.endTime=null;S.bk.useCus=false;S.bk.cusTime='';render();};
+window.pickEndTime=(t)=>{S.bk.endTime=t;render();};
+window.toggleCus=(c)=>{S.bk.useCus=c;if(c){S.bk.time=null;S.bk.endTime=null;}else S.bk.cusTime='';render();};
+
+window.aPickDay=(key)=>{
+  if(S.aDate===key){
+    // Second tap on same day = block/unblock
+    if(S.data.blockedDates[key])delete S.data.blockedDates[key];
+    else S.data.blockedDates[key]=true;
+    save(S.data);render();
+  } else {
+    // First tap = select date to show time slots
+    S.aDate=key;render();
+  }
+};
+
+window.togTime=(dk2,t)=>{
+  if(!S.data.blockedTimes[dk2])S.data.blockedTimes[dk2]=[];
+  const idx=S.data.blockedTimes[dk2].indexOf(t);
+  if(idx>=0)S.data.blockedTimes[dk2].splice(idx,1);else S.data.blockedTimes[dk2].push(t);
+  save(S.data);render();
+};
+
+window.blkTimeRange=(dk2,doBlk)=>{
+  const from=document.getElementById('tFrom')?.value,to=document.getElementById('tTo')?.value;
+  if(!from||!to){alert('Select both start and end time.');return;}
+  const fi=TIMES.indexOf(from),ti=TIMES.indexOf(to);
+  if(fi<0||ti<0||fi>ti){alert('Start time must be before end time.');return;}
+  if(!S.data.blockedTimes[dk2])S.data.blockedTimes[dk2]=[];
+  for(let i=fi;i<=ti;i++){const t=TIMES[i],idx=S.data.blockedTimes[dk2].indexOf(t);if(doBlk&&idx<0)S.data.blockedTimes[dk2].push(t);else if(!doBlk&&idx>=0)S.data.blockedTimes[dk2].splice(idx,1);}
+  save(S.data);render();
+};
+
+window.blkDayRange=(doBlk)=>{
+  const from=document.getElementById('drFrom')?.value,to=document.getElementById('drTo')?.value;
+  if(!from||!to){alert('Select both start and end date.');return;}
+  const fd2=pk(from),td=pk(to);
+  if(fd2>td){alert('Start date must be before end date.');return;}
+  const t0=tod();let cur=new Date(fd2);
+  while(cur<=td){if(cur>t0){const k=`${cur.getFullYear()}-${String(cur.getMonth()+1).padStart(2,'0')}-${String(cur.getDate()).padStart(2,'0')}`;if(doBlk)S.data.blockedDates[k]=true;else delete S.data.blockedDates[k];}cur.setDate(cur.getDate()+1);}
+  save(S.data);render();
+};
+
+window.confirmB=(id)=>{
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(!b)return;
+  b.status='confirmed';
+  // Auto-block the confirmed time slot on that date so future customers can't book it
+  if(b.date&&b.time){
+    if(!S.data.blockedTimes[b.date])S.data.blockedTimes[b.date]=[];
+    if(!S.data.blockedTimes[b.date].includes(b.time)){
+      S.data.blockedTimes[b.date].push(b.time);
+    }
+  }
+  save(S.data);
+  // Send customer confirmation notification
+  sendCustomerNotification(b,'confirmed');
+  render();
+};
+window.cancelB=(id)=>{
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(!b)return;
+  // If confirmed, unblock the time slot
+  if(b.status==='confirmed'&&b.date&&b.time&&S.data.blockedTimes[b.date]){
+    S.data.blockedTimes[b.date]=S.data.blockedTimes[b.date].filter(t=>t!==b.time);
+  }
+  b.status='cancelled';
+  save(S.data);render();
+};
+window.restoreB=(id)=>{
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(b){b.status='pending';save(S.data);render();}
+};
+
+window.startEdit=(id)=>{
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(!b)return;
+  S.editId=id;
+  S.editForm={...b.form};
+  S.editDate=b.date;
+  S.editTime=b.time;
+  S.editStatus=b.status;
+  render();
+};
+window.closeEdit=()=>{S.editId=null;S.editForm=null;render();};
+window.saveEdit=(id)=>{
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(!b)return;
+  // Merge form changes
+  if(S.editForm){
+    const fn=document.getElementById('ef_firstName')?.value;
+    const ln=document.getElementById('ef_lastName')?.value;
+    const em=document.getElementById('ef_email')?.value;
+    const ph=document.getElementById('ef_phone')?.value;
+    const no=document.getElementById('ef_notes')?.value;
+    if(fn)b.form.firstName=fn;if(ln)b.form.lastName=ln;if(em)b.form.email=em;if(ph)b.form.phone=ph;b.form.notes=no;
+  }
+  const newDate=document.getElementById('ef_date')?.value;
+  const newTime=document.getElementById('ef_time')?.value;
+  const newStatus=document.getElementById('ef_status')?.value;
+  if(newDate)b.date=newDate;
+  if(newTime)b.time=newTime;
+  if(newStatus)b.status=newStatus;
+  save(S.data);S.editId=null;S.editForm=null;render();
+};
+
+window.togSettings=()=>{S.settingsOpen=!S.settingsOpen;render();};
+window.togSection=(sec)=>{S.openSection=S.openSection===sec?null:sec;render();};
+window.refreshAdmin=()=>{S.data=loadData();render();};
+
+window.changePin=()=>{
+  const np=document.getElementById('newPin')?.value;
+  const cp=document.getElementById('confirmPin')?.value;
+  const msg=document.getElementById('pinMsg');
+  if(!np||np.length<4){if(msg){msg.style.color='#e24b4a';msg.textContent='PIN must be 4 digits.';}return;}
+  if(np!==cp){if(msg){msg.style.color='#e24b4a';msg.textContent='PINs do not match.';}return;}
+  S.data.adminPin=np;save(S.data);
+  if(msg){msg.style.color='#7db840';msg.textContent='✓ PIN updated!';}
+  setTimeout(()=>{if(msg)msg.textContent='';},3000);
+};
+
+window.saveNotifSettings=()=>{
+  const em=document.getElementById('notifEmail')?.value?.trim();
+  const ph=document.getElementById('notifPhone')?.value?.trim();
+  if(em)S.data.notifEmail=em;
+  if(ph)S.data.notifPhone=ph;
+  save(S.data);
+  const msg=document.getElementById('notifMsg');
+  if(msg){msg.style.color='#7db840';msg.textContent='✓ Contact info saved!';}
+  setTimeout(()=>{if(msg)msg.textContent='';},3000);
+};
+
+window.dlICS=(id)=>{
+  const b=S.data.bookings.find(b=>b.id===id);
+  if(!b)return;
+  const sl=b.ses?.id==='other'?b.custom:b.ses?.label;
+  const [y,mo,d]=b.date.split('-').map(Number);
+  const timeStr=b.time||'9:00 AM';
+  function to24(t){const[time,ampm]=t.split(' ');let[h,m]=time.split(':').map(Number);if(ampm==='PM'&&h!==12)h+=12;if(ampm==='AM'&&h===12)h=0;return`${String(h).padStart(2,'0')}${String(m).padStart(2,'0')}00`;}
+  const dtStart=`${b.date.replace(/-/g,'')}T${to24(timeStr)}`;
+  const endTime=b.endTime?to24(b.endTime):null;
+  let dtEnd=dtStart;
+  if(endTime){dtEnd=`${b.date.replace(/-/g,'')}T${endTime}`;}
+  else{// default +1hr
+    const h=parseInt(dtStart.slice(9,11));const m2=dtStart.slice(11,13);
+    dtEnd=`${b.date.replace(/-/g,'')}T${String(h+1).padStart(2,'0')}${m2}00`;}
+  const ics=`BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//TML828//Booking//EN\r\nBEGIN:VEVENT\r\nUID:${id}@tml828\r\nDTSTAMP:${new Date().toISOString().replace(/[-:]/g,'').split('.')[0]}Z\r\nDTSTART:${dtStart}\r\nDTEND:${dtEnd}\r\nSUMMARY:${sl} — ${b.form.firstName} ${b.form.lastName}\r\nDESCRIPTION:Session: ${sl}${b.pkg?' ('+b.pkg.name+')':''}\\nClient: ${b.form.firstName} ${b.form.lastName}\\nEmail: ${b.form.email}\\nPhone: ${b.form.phone}\\nStatus: ${b.status}\r\nLOCATION:Cleveland, Ohio\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+  const blob=new Blob([ics],{type:'text/calendar'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=`TML828_${b.form.lastName}_${b.date}.ics`;a.click();
+  URL.revokeObjectURL(url);
+};
+
+// ── NOTIFICATIONS VIA NETLIFY FUNCTION ──
+async function callNotify(type, booking){
+  const appUrl = S.data.appUrl || window.location.origin;
+  const base = appUrl.endsWith('/') ? appUrl.slice(0,-1) : appUrl.replace(/\/[^\/]*\.html$/,'');
+  const fnUrl = base + '/.netlify/functions/notify';
+  const sl = booking.ses?.id==='other' ? booking.custom : booking.ses?.label;
+  const tl = booking.useCus ? `${booking.cusTime} (requested)` : (booking.endTime ? `${booking.time} – ${booking.endTime}` : booking.time);
+  try{
+    await fetch(fnUrl, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        type,
+        booking:{
+          ...booking,
+          sesLabel: sl,
+          pkgName: booking.pkg?.name || '',
+          timeLabel: tl,
+          dateLabel: fd(booking.date),
+        }
+      })
+    });
+  }catch(e){ console.log('Notify error:',e); }
+}
+
+async function sendEmailNotification(booking){ await callNotify('new_booking', booking); }
+async function sendCustomerNotification(booking, type){
+  if(type==='confirmed') await callNotify('confirmed', booking);
+}
+
+window.testEmail=async()=>{
+  const msg=document.getElementById('emailTestMsg');
+  if(msg){msg.style.color='#c09840';msg.textContent='Sending test…';}
+  const appUrl = S.data.appUrl || window.location.origin;
+  const fnUrl = appUrl.replace(/\/[^\/]*$/, '') + '/.netlify/functions/notify';
+  try{
+    const r=await fetch(fnUrl,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({type:'new_booking', booking:{
+        id:'test123456', ses:{id:'portrait',label:'Test Session'}, sesLabel:'Test Session',
+        pkg:null, pkgName:'', date:'2025-01-01', dateLabel:'Wednesday, January 1, 2025',
+        time:'10:00 AM', timeLabel:'10:00 AM', endTime:null,
+        useCus:false, cusTime:'', custom:'',
+        form:{firstName:'Test',lastName:'Customer',email:S.data.notifEmail||'',
+          phone:'(216) 555-0100',instagram:'',notes:'This is a test notification.',carrier:''},
+        status:'pending', createdAt:new Date().toISOString(),
+      }})
+    });
+    const data=await r.json();
+    if(msg){
+      msg.style.color='#7db840';
+      msg.textContent=data.errors?`Sent with warnings: ${data.errors[0]}`:'✓ Test sent! Check email and phone.';
+    }
+  }catch(e){
+    if(msg){msg.style.color='#e24b4a';msg.textContent='Cannot reach function — make sure app is deployed on Netlify.';}
+  }
+  setTimeout(()=>{if(msg)msg.textContent='';},8000);
+};
+
+window.submitBk=()=>{
+  const f=S.bk.form,e={};
+  if(!f.firstName?.trim())e.firstName='Required';
+  if(!f.lastName?.trim())e.lastName='Required';
+  if(!f.email?.trim()||!/\S+@\S+\.\S+/.test(f.email))e.email='Valid email required';
+  if(!f.phone?.trim()||f.phone.replace(/\D/g,'').length<10)e.phone='Valid phone required';
+  S.fErr=e;
+  if(Object.keys(e).length>0){render();return;}
+  const booking={
+    id:Date.now().toString(),
+    ses:S.bk.ses,custom:S.bk.custom,pkg:S.bk.pkg,
+    date:S.bk.date,time:S.bk.time,endTime:S.bk.endTime,
+    cusTime:S.bk.cusTime,useCus:S.bk.useCus,
+    form:{...S.bk.form},status:'pending',createdAt:new Date().toISOString()
+  };
+  S.data.bookings.push(booking);save(S.data);
+  sendEmailNotification(booking);      // notify Noha
+  sendCustomerNotification(booking,'pending'); // notify customer
+  S.bk.step=stepLabels(S.bk.ses).length;render();
+};
+
+render();
+</script>
+</body>
+</html>
