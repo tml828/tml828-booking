@@ -201,8 +201,7 @@ function save(data){try{localStorage.setItem(SK,JSON.stringify(data));}catch(e){
 
 // ── CLOUD DATABASE SYNC ──
 function dbUrl(){
-  const base=(window.location.origin||'').replace(/\/+$/,'');
-  return base+'/.netlify/functions/db';
+  return 'https://idyllic-panda-945c6f.netlify.app/.netlify/functions/db';
 }
 async function cloudLoad(){
   try{
@@ -668,20 +667,6 @@ function renderAdmin(){
         <div id="pinMsg" style="font-size:12px;margin-top:8px;min-height:18px;"></div>
       </div>
 
-      <!-- Notifications -->
-      <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:8px;font-weight:500;">🔔 Notification Settings</div>
-        <div style="font-size:13px;color:#8a7040;margin-bottom:12px;">Get notified when a customer books. Edit anytime.</div>
-        <div style="display:grid;gap:10px;">
-          <div><label>Your email for notifications</label><input type="email" id="notifEmail" placeholder="noha@example.com" value="${S.data.notifEmail||''}" oninput="S.data.notifEmail=this.value;"></div>
-          <div><label>Your phone for SMS <span style="text-transform:none;letter-spacing:0;color:#4a3a18;">(optional)</span></label><input type="tel" id="notifPhone" placeholder="(216) 555-0100" value="${S.data.notifPhone||''}" oninput="S.data.notifPhone=this.value;"></div>
-          <div style="display:flex;gap:8px;align-items:center;">
-            <button class="bg" onclick="window.saveNotifSettings()" style="padding:10px 16px;font-size:11px;">Save</button>
-            <div id="notifMsg" style="font-size:12px;min-height:16px;"></div>
-          </div>
-        </div>
-      </div>
-
       <!-- SMS via Twilio -->
       <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
         <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:6px;font-weight:500;">💬 SMS Notifications — Twilio</div>
@@ -703,21 +688,7 @@ function renderAdmin(){
         </div>
       </div>
 
-      <!-- App link -->
-      <div style="border:1px solid var(--border);padding:14px;margin-bottom:12px;border-radius:2px;">
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:6px;font-weight:500;">🔗 App URL</div>
-        <div style="font-size:13px;color:#8a7040;margin-bottom:10px;">Included in email notifications as a direct link to the admin panel.</div>
-        <div><label>Your hosted URL</label><input type="text" id="appUrl" placeholder="https://yoursite.com/booking.html" value="${S.data.appUrl||window.location.href.split('?')[0]}" oninput="S.data.appUrl=this.value;save(S.data);"></div>
-      </div>
-
-      <!-- iPhone Calendar -->
-      <div style="border:1px solid var(--border);padding:14px;border-radius:2px;">
-        <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#c09840;margin-bottom:6px;font-weight:500;">📅 iPhone Calendar</div>
-        <div style="font-size:13px;color:#8a7040;margin-bottom:12px;">Download a .ics file for any confirmed booking and open it on your iPhone to add it to Apple Calendar.</div>
-        ${confirmed.length
-          ? `<div style="display:flex;flex-wrap:wrap;gap:8px;">${confirmed.map(b=>{const sl=b.ses?.id==='other'?b.custom:b.ses?.label;return`<button class="bedit" onclick="window.dlICS('${b.id}')" style="font-size:11px;">⬇ ${b.form.firstName} ${b.form.lastName} · ${fd(b.date)}</button>`;}).join('')}</div>`
-          : `<div style="font-size:13px;color:#5a4a20;">No confirmed bookings yet.</div>`}
-      </div>
+    </div>
 
     </div>
   </div>
@@ -751,7 +722,30 @@ function renderAdmin(){
   ${S.openSection==='confirmed'?`
     <div style="margin-bottom:18px;">
       <div class="sec" style="margin-bottom:12px;">Confirmed (${confirmed.length})</div>
-      ${confirmed.length?confirmed.map(bCard).join(''):`<div style="font-size:14px;color:#6a5228;padding:16px;text-align:center;border:1px solid #2a2010;">No confirmed bookings</div>`}
+      ${confirmed.length?confirmed.map(b=>{
+        const sl=b.ses?.id==='other'?b.custom:b.ses?.label,pk2=b.pkg?` · ${b.pkg.name}`:'';
+        const tl=b.useCus?`${b.cusTime} (requested)`:(b.endTime?`${b.time} – ${b.endTime}`:b.time);
+        return`<div class="card" style="margin-bottom:12px;">
+          <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px;">
+            <div>
+              <div style="font-size:19px;color:#fff8e8;font-family:'Cormorant Garamond',serif;font-weight:400;">${b.form.firstName} ${b.form.lastName}</div>
+              <div style="font-size:13px;color:#c9952a;margin-top:2px;">${sl}${pk2}</div>
+            </div>
+            <span class="badge bc">confirmed</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:14px;color:#c09840;margin-bottom:14px;">
+            <span>📅 ${fd(b.date)}</span><span>🕐 ${tl}</span>
+            <span>📧 ${b.form.email}</span><span>📱 ${b.form.phone}</span>
+            ${b.form.instagram?`<span>📸 ${b.form.instagram}</span>`:''}
+          </div>
+          ${b.form.notes?`<div style="font-size:13px;color:#a08040;background:#0f0c07;border:1px solid #1e1808;padding:12px;margin-bottom:12px;line-height:1.7;font-style:italic;">"${b.form.notes}"</div>`:''}
+          <div style="display:flex;gap:8px;flex-wrap:wrap;">
+            <button class="bg" onclick="window.dlICS('${b.id}')" style="padding:10px 18px;font-size:11px;">📅 Add to iPhone Calendar</button>
+            <button class="bedit" onclick="window.startEdit('${b.id}')">Edit</button>
+            <button class="bd" onclick="window.cancelB('${b.id}')">Cancel</button>
+          </div>
+        </div>`;
+      }).join(''):`<div style="font-size:14px;color:#6a5228;padding:16px;text-align:center;border:1px solid #2a2010;">No confirmed bookings</div>`}
     </div>`:''}
 
   ${adminCal}${adminTimes}
@@ -994,8 +988,7 @@ window.dlICS=(id)=>{
 
 // ── NOTIFICATIONS VIA NETLIFY FUNCTION ──
 async function callNotify(type, booking){
-  const appUrl = (S.data.appUrl || window.location.origin).replace(/\/+$/,'');
-  const fnUrl = appUrl + '/.netlify/functions/notify';
+  const fnUrl='https://idyllic-panda-945c6f.netlify.app/.netlify/functions/notify';
   const sl = booking.ses?.id==='other' ? booking.custom : booking.ses?.label;
   const tl = booking.useCus ? `${booking.cusTime} (requested)` : (booking.endTime ? `${booking.time} – ${booking.endTime}` : booking.time);
   try{
@@ -1025,7 +1018,7 @@ window.testEmail=async()=>{
   const msg=document.getElementById('emailTestMsg');
   if(msg){msg.style.color='#c09840';msg.textContent='Sending test…';}
   const appUrl = (S.data.appUrl || window.location.origin).replace(/\/+$/,'');
-  const fnUrl = appUrl + '/.netlify/functions/notify';
+  const fnUrl = 'https://idyllic-panda-945c6f.netlify.app/.netlify/functions/notify';
   try{
     const r=await fetch(fnUrl,{
       method:'POST',
