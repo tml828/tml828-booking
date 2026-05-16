@@ -961,9 +961,8 @@ window.dlICS=(id)=>{
 
 // ── NOTIFICATIONS VIA NETLIFY FUNCTION ──
 async function callNotify(type, booking){
-  const appUrl = S.data.appUrl || window.location.origin;
-  const base = appUrl.endsWith('/') ? appUrl.slice(0,-1) : appUrl.replace(/\/[^\/]*\.html$/,'');
-  const fnUrl = base + '/.netlify/functions/notify';
+  const appUrl = (S.data.appUrl || window.location.origin).replace(/\/+$/,'');
+  const fnUrl = appUrl + '/.netlify/functions/notify';
   const sl = booking.ses?.id==='other' ? booking.custom : booking.ses?.label;
   const tl = booking.useCus ? `${booking.cusTime} (requested)` : (booking.endTime ? `${booking.time} – ${booking.endTime}` : booking.time);
   try{
@@ -992,8 +991,8 @@ async function sendCustomerNotification(booking, type){
 window.testEmail=async()=>{
   const msg=document.getElementById('emailTestMsg');
   if(msg){msg.style.color='#c09840';msg.textContent='Sending test…';}
-  const appUrl = S.data.appUrl || window.location.origin;
-  const fnUrl = appUrl.replace(/\/[^\/]*$/, '') + '/.netlify/functions/notify';
+  const appUrl = (S.data.appUrl || window.location.origin).replace(/\/+$/,'');
+  const fnUrl = appUrl + '/.netlify/functions/notify';
   try{
     const r=await fetch(fnUrl,{
       method:'POST',
