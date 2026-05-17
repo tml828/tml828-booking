@@ -529,7 +529,7 @@ function renderAdmin(){
     <div class="pt2">Photographer Login</div>
     <div style="width:36px;height:1px;background:var(--gold);margin:12px auto 26px;"></div>
     <label style="text-align:left;display:block;margin-bottom:7px;">Enter your PIN</label>
-    <input type="password" maxlength="4" placeholder="••••" style="text-align:center;font-size:26px;letter-spacing:0.5em;" oninput="S.pin=this.value;" onkeydown="if(event.key==='Enter')window.doLogin();">
+    <input type="tel" inputmode="numeric" pattern="[0-9]*" maxlength="4" placeholder="••••" style="text-align:center;font-size:26px;letter-spacing:0.5em;" oninput="S.pin=this.value;" onkeydown="if(event.key==='Enter')window.doLogin();">
     ${S.pinErr?`<div class="em" style="margin-top:8px;">${S.pinErr}</div>`:''}
     <button class="bg" onclick="window.doLogin()" style="width:100%;margin-top:16px;">Sign In →</button>
   </div>`;}
